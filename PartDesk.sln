@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PartDesk.Web", "PartDesk.Web\PartDesk.Web.csproj", "{B176FBF0-E6E9-4368-9FB3-D8CA9F1F54D3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PartDesk.Domain", "PartDesk.Domain\PartDesk.Domain.csproj", "{587AE977-85B9-4CF4-B8CA-1093970E02D1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B176FBF0-E6E9-4368-9FB3-D8CA9F1F54D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B176FBF0-E6E9-4368-9FB3-D8CA9F1F54D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B176FBF0-E6E9-4368-9FB3-D8CA9F1F54D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B176FBF0-E6E9-4368-9FB3-D8CA9F1F54D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{587AE977-85B9-4CF4-B8CA-1093970E02D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{587AE977-85B9-4CF4-B8CA-1093970E02D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{587AE977-85B9-4CF4-B8CA-1093970E02D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{587AE977-85B9-4CF4-B8CA-1093970E02D1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
