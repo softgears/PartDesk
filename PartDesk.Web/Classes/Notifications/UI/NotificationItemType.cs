@@ -1,3 +1,5 @@
+using PartDesk.Domain.Enums;
+
 namespace PartDesk.Web.Classes.Notifications.UI
 {
     /// <summary>

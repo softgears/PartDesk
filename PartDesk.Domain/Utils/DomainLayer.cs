@@ -13,6 +13,7 @@
 using Autofac;
 using PartDesk.Domain.Interfaces.Notifications;
 using PartDesk.Domain.Notifications.Mailing;
+using PartDesk.Domain.Notifications.SMS;
 
 namespace PartDesk.Domain.Utils
 {
@@ -32,7 +33,7 @@ namespace PartDesk.Domain.Utils
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<UniSenderMailNotificationManager>().As<IMailNotificationManager>().SingleInstance();
-            builder.RegisterType<ISMSNotificationManager>().As<ISMSNotificationManager>().SingleInstance();
+            builder.RegisterType<SMSNotificationManager>().As<ISMSNotificationManager>().SingleInstance();
         }
     }
 }

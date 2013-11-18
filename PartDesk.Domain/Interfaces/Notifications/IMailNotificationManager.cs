@@ -1,4 +1,6 @@
-﻿namespace PartDesk.Domain.Interfaces.Notifications
+﻿using PartDesk.Domain.Entities;
+
+namespace PartDesk.Domain.Interfaces.Notifications
 {
     /// <summary>
     /// Абстрактный нотификатор по электронной почте

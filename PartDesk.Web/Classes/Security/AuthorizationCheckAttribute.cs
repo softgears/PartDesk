@@ -1,4 +1,9 @@
 ﻿using System.Web.Mvc;
+using PartDesk.Domain.Enums;
+using PartDesk.Domain.Interfaces.Notifications;
+using PartDesk.Domain.Interfaces.Repositories;
+using PartDesk.Domain.IoC;
+using PartDesk.Web.Controllers;
 
 namespace PartDesk.Web.Classes.Security
 {
@@ -55,7 +60,7 @@ namespace PartDesk.Web.Classes.Security
                 {
                     // Проверка того что пользователь имеет требуемые разрешения
                     var permission = Locator.GetService<IPermissionsRepository>().Load(RequiredPermission);
-                    Locator.GetService<IUINotificationManager>().Error(string.Format("Отсутствует необходимая привелегия ({0}) для доступа к указанному разделу", permission.DisplayName));
+                    Locator.GetService<IUINotificationManager>().Error(string.Format("Отсутствует необходимая привелегия ({0}) для доступа к указанному разделу", permission.Name));
                     filterContext.Result = new RedirectResult(this.RedirectUrl);    
                 }
                 else

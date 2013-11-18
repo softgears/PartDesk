@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Web;
+using PartDesk.Domain.Interfaces.Notifications;
 
 namespace PartDesk.Web.Classes.Notifications.UI
 {
