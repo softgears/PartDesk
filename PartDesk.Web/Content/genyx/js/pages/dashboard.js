@@ -1,20 +1,6 @@
 $(document).ready(function() {
 
-	//------------- jGrowl notification -------------//
-    setTimeout(function() {
-    	$.jGrowl("<i class='icon16 i-checkmark-3'></i> Login is successfull", {
-    		group: 'success',
-    		position: 'center',
-    		sticky: false,
-    		closeTemplate: '<i class="icon16 i-close-2"></i>',
-    		animateOpen: {
-		        width: 'show',
-		        height: 'show'
-		    }
-    	});
-    }, 250);
- 	
- 	//define chart clolors ( you maybe add more colors if you want or flot will add it automatic )
+	//define chart clolors ( you maybe add more colors if you want or flot will add it automatic )
  	var chartColours = ['#62aeef', '#d8605f', '#72c380', '#6f7a8a', '#f7cb38', '#5a8022', '#2c7282'];
 
  	//generate random number for charts

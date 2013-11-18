@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using PartDesk.Domain.Entities;
+using PartDesk.Domain.Interfaces.Notifications;
 using PartDesk.Domain.Interfaces.Repositories;
 using PartDesk.Domain.IoC;
 using PartDesk.Web.Classes.Navigation;
@@ -120,6 +121,28 @@ namespace PartDesk.Web.Controllers
                 Title = title,
                 Url = url
             });
+        }
+
+        #endregion
+
+        #region Уведомления
+
+        /// <summary>
+        /// Отображает сообщение об ошибке
+        /// </summary>
+        /// <param name="message">Сообщение</param>
+        public void ShowError(string message)
+        {
+            Locator.GetService<IUINotificationManager>().Error(message);
+        }
+
+        /// <summary>
+        /// Отображает сообщение об успешном выполнении операции
+        /// </summary>
+        /// <param name="message"></param>
+        public void ShowSuccess(string message)
+        {
+            Locator.GetService<IUINotificationManager>().Success(message);
         }
 
         #endregion

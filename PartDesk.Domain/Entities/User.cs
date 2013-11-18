@@ -98,5 +98,14 @@ namespace PartDesk.Domain.Entities
         {
             return Role.RolePermissions.Any(p => p.Permission.PermissionGroup == "Администрирование");
         }
+
+        /// <summary>
+        /// Возвращает сумму, которую пользователь должен уплатить за все свои заказы
+        /// </summary>
+        /// <returns></returns>
+        public decimal GetOrdersIncomeAmount()
+        {
+            return 0;
+        }
     }
 }

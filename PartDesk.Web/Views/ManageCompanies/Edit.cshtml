@@ -1,0 +1,181 @@
+﻿@using PartDesk.Domain.Utils
+@using PartDesk.Web.Classes.Ext
+@model PartDesk.Domain.Entities.Company
+
+@{
+    ViewBag.Title = "Редактирование компании " + Model.Name;
+    Layout = "../Shared/AccountLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        @* Свойства компании *@
+        @Html.Partial("CompanyEditForm", Model)
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        @* Пользователи компании *@
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="icon"><i class="icon20 i-users"></i></div>
+                <h4>Пользователи</h4>
+                <a href="#" class="minimize"></a>
+            </div>
+            <div class="panel-body">
+                <table class="table table-striped table-bordered table-hover" id="users-table">
+                    <thead>
+                        <tr>
+                            <th>ИД
+                            </th>
+                            <th>Email
+                            </th>
+                            <th>Ф.И.О.
+                            </th>
+                            <th>Телефон
+                            </th>
+                            <th>Заказов
+                            </th>
+                            <th>Последний логин
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            var users = Model.GetUsers();
+                        }
+                        @if (users.Count == 0)
+                        {
+                            <tr>
+                                <td colspan="7">В данной компании нет пользователей, вы можете <a href="/manage/users/add?CompanyId=@Model.Id">создать нового пользователя</a></td>
+                            </tr>
+                        }
+                        else
+                        {
+                            foreach (var user in users)
+                            {
+                            <tr>
+                                <td>
+                                    <a href="/manage/users/@user.Id/edit">@user.Id</a>
+                                </td>
+                                <td>
+                                    <a href="/manage/users/@user.Id/edit">@user.Email</a>
+                                </td>
+                                <td>
+                                    <a href="/manage/users/@user.Id/edit">@user.GetFio()</a>
+                                </td>
+                                <td>
+                                    @user.Phone.FormatPhoneNumber()
+                                </td>
+                                <td>
+                                    @user.GetOrdersCount()
+                                </td>
+                                <td>
+                                    @user.DateModified.FormatDateTime()
+                                </td>
+                                <td style="width: 45px">
+                                    <a href="/manage/orders/?UserId=@user.Id" class="btn btn-xs btn-success tip" title="Список заказов пользователя"><i class="icon12 i-cart-2"></i></a>
+                                </td>
+                            </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        @* Заказы компании *@
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="icon"><i class="icon20 i-cart-3"></i></div>
+                <h4>Заказы компании</h4>
+                <a href="#" class="minimize"></a>
+            </div>
+            <div class="panel-body">
+                @{
+                    var orders = Model.GetOrders();
+                }
+                <table class="table table-striped table-bordered table-hover" id="orders-table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Номер
+                            </th>
+                            <th>
+                                Статус
+                            </th>
+                            <th>
+                                Менеджер
+                            </th>
+                            <th>
+                                Автор
+                            </th>
+                            <th>
+                                Наименований
+                            </th>
+                            <th>
+                                Общее кол-во
+                            </th>
+                            <th>
+                                Стоимость
+                            </th>
+                            <th>
+                                Дата обновления
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (orders.Count == 0)
+                        {
+                            <tr>
+                                <td colspan="8">
+                                    Не найдено активных заказов
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            foreach (var order in orders)
+                            {
+                                <tr>
+                                    <td>
+                                        <a href="/manage/orders/@order.Id/edit">@order.Id</a>
+                                    </td>
+                                    <td>
+                                        @order.GetStatus()
+                                    </td>
+                                    <td>
+                                        <a href="/manage/users/@order.ManagerId/info">@order.ManagedOrders.GetFioSmall()</a>
+                                    </td>
+                                    <td>
+                                        <a href="/manage/users/@order.AuthorId/info">@order.Author.GetFioSmall()</a>
+                                    </td>
+                                    <td>
+                                        @order.GetTypesCount()
+                                    </td>
+                                    <td>
+                                        @order.GetTotalCount()
+                                    </td>
+                                    <td>
+                                        @String.Format("{0:c}",order.GetTotalPrice())
+                                    </td>
+                                    <td>
+                                        @order.LastUpdate.FormatDateTime()
+                                    </td>
+                                    <td>
+                                        
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -129,12 +129,14 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\ManageCompaniesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Account\ChangePasswordModel.cs" />
     <Compile Include="Models\Account\LoginModel.cs" />
     <Compile Include="Models\Dashboard\DashboardModel.cs" />
+    <Compile Include="Models\Manage\GenericListModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1177,6 +1179,21 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\NavigationChain.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\UINotification.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\ManageCompanies\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\ManageCompanies\Add.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\ManageCompanies\CompanyEditForm.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\ManageCompanies\Edit.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
