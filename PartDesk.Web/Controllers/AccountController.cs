@@ -61,7 +61,7 @@ namespace PartDesk.Web.Controllers
         {
             if (IsAuthentificated)
             {
-                return RedirectToAction("Dashboard");
+                return RedirectToAction("Index", "Dashboard");
             }
             return View();
         }
@@ -76,7 +76,7 @@ namespace PartDesk.Web.Controllers
         {
             if (IsAuthentificated)
             {
-                return RedirectToAction("Dashboard");
+                return RedirectToAction("Index", "Dashboard");
             }
 
             // Валидируем что пользоатель есть
@@ -93,7 +93,7 @@ namespace PartDesk.Web.Controllers
             AuthorizeUser(user, model.RememberMe);
 
             // Идем в личный кабинет
-            return RedirectToAction("Dashboard");
+            return RedirectToAction("Index","Dashboard");
         }
 
         /// <summary>

@@ -321,6 +321,7 @@ $(document).ready(function() {
 	$('.spark>.positive').sparkline('html', { type:'bar', barColor:'#42b449'});
 	$('.spark>.negative').sparkline('html', { type:'bar', barColor:'#db4a37'});
 
+    /*
 	//------------- Gauge -------------//
 	var g = new JustGage({
 	    id: "gauge", 
@@ -351,7 +352,7 @@ $(document).ready(function() {
 	setInterval(function() {
       g.refresh(getRandomInt(0, 100));
       g1.refresh(getRandomInt(100, 500));
-    }, 2500);
+    }, 2500);*/
 
 });
 
