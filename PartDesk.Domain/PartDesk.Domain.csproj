@@ -39,7 +39,11 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\packages\NLog.2.1.0\lib\net45\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Web" />
@@ -51,18 +55,52 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAL\DataAccessLayer.cs" />
+    <Compile Include="DAL\PartDeskDataContext.cs" />
     <Compile Include="DAL\PartkDesk.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>PartkDesk.dbml</DependentUpon>
     </Compile>
+    <Compile Include="DAL\Repositories\BaseRepository.cs" />
+    <Compile Include="DAL\Repositories\CompaniesRepository.cs" />
+    <Compile Include="DAL\Repositories\MailNotificationMessagesRepository.cs" />
+    <Compile Include="DAL\Repositories\OrdersRepository.cs" />
+    <Compile Include="DAL\Repositories\PermissionsRepository.cs" />
+    <Compile Include="DAL\Repositories\RolesRepository.cs" />
+    <Compile Include="DAL\Repositories\SMSNotificationMessagesRepository.cs" />
+    <Compile Include="DAL\Repositories\UsersRepository.cs" />
     <Compile Include="Interfaces\Cache\IStringCache.cs" />
     <Compile Include="Interfaces\Notifications\IMailNotificationManager.cs" />
     <Compile Include="Interfaces\Notifications\ISMSNotificationManager.cs" />
     <Compile Include="Interfaces\Notifications\IUINotificationManager.cs" />
+    <Compile Include="Interfaces\Repositories\IBaseRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ICompaniesRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IMailNotificationMessagesRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IOrdersRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IPermissionsRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IRolesRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ISMSNotificationMessagesRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IUsersRepository.cs" />
     <Compile Include="IoC\Locator.cs" />
+    <Compile Include="Notifications\Mailing\MailConnectionString.cs" />
+    <Compile Include="Notifications\Mailing\MailNotificationManager.cs" />
+    <Compile Include="Notifications\Mailing\UniSenderMailNotificationManager.cs" />
+    <Compile Include="Notifications\SMS\SMSNotificationManager.cs" />
+    <Compile Include="Notifications\Templates\BaseTemplate.cs" />
+    <Compile Include="Notifications\Templates\FileTemplate.cs" />
+    <Compile Include="Notifications\Templates\ParametrizedFileTemplate.cs" />
+    <Compile Include="Notifications\Templates\ParametrizedTemplate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Routing\RouteAttribute.cs" />
+    <Compile Include="Routing\RoutesManager.cs" />
     <Compile Include="Utils\DictionaryStringCache.cs" />
+    <Compile Include="Utils\DomainLayer.cs" />
     <Compile Include="Utils\DynamicJsonObject.cs" />
     <Compile Include="Utils\PasswordUtils.cs" />
     <Compile Include="Utils\RusNumbers.cs" />
@@ -70,19 +108,21 @@
     <Compile Include="Utils\Transliteration.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="DAL\PartkDesk.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
       <LastGenOutput>PartkDesk.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="DAL\Repositories\" />
     <Folder Include="Entities\" />
     <Folder Include="Enums\" />
-    <Folder Include="Interfaces\Repositories\" />
-    <Folder Include="Notifications\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />

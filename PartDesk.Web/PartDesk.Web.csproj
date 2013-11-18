@@ -114,6 +114,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\IoCConfig.cs" />
+    <Compile Include="Classes\Ext\DateTimeExtensions.cs" />
+    <Compile Include="Classes\Ext\DateTimeModelBinder.cs" />
+    <Compile Include="Classes\Ext\DateUtils.cs" />
+    <Compile Include="Classes\Ext\ViewContextExtensions.cs" />
+    <Compile Include="Classes\Navigation\NavigationChainItem.cs" />
+    <Compile Include="Classes\Notifications\UI\NotificationItemType.cs" />
+    <Compile Include="Classes\Notifications\UI\UINotificationItem.cs" />
+    <Compile Include="Classes\Notifications\UI\UINotificationManager.cs" />
+    <Compile Include="Classes\Security\AuthorizationCheckAttribute.cs" />
+    <Compile Include="Classes\Utils\MathUtils.cs" />
+    <Compile Include="Classes\WebLayer.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -135,11 +148,16 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PartDesk.Domain\PartDesk.Domain.csproj">
+      <Project>{587ae977-85b9-4cf4-b8ca-1093970e02d1}</Project>
+      <Name>PartDesk.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
