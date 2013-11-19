@@ -145,6 +145,17 @@ namespace PartDesk.Web.Controllers
             Locator.GetService<IUINotificationManager>().Success(message);
         }
 
+        /// <summary>
+        /// Уведомляем указанного пользователя Email сообщением
+        /// </summary>
+        /// <param name="user">Пользователь</param>
+        /// <param name="subject">Тема сообщения</param>
+        /// <param name="content">Содержимое</param>
+        public void NotifyEmail(User user, string subject, string content)
+        {
+            Locator.GetService<IMailNotificationManager>().Notify(user,subject,content);
+        }
+
         #endregion
     }
 }

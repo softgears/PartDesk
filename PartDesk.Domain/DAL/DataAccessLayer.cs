@@ -38,6 +38,8 @@ namespace PartDesk.Domain.DAL
             builder.RegisterType<PermissionsRepository>().As<IPermissionsRepository>();
             builder.RegisterType<RolesRepository>().As<IRolesRepository>();
             builder.RegisterType<OrdersRepository>().As<IOrdersRepository>();
+            builder.RegisterType<MailNotificationMessagesRepository>().As<IMailNotificationMessagesRepository>();
+            builder.RegisterType<SMSNotificationMessagesRepository>().As<ISMSNotificationMessagesRepository>();
         }
     }
 }

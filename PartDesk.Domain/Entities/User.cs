@@ -11,6 +11,8 @@
 // ========
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using PartDesk.Domain.Utils;
@@ -106,6 +108,15 @@ namespace PartDesk.Domain.Entities
         public decimal GetOrdersIncomeAmount()
         {
             return 0;
+        }
+
+        /// <summary>
+        /// Получает список всех заказов у пользователя
+        /// </summary>
+        /// <returns></returns>
+        public IList<Order> GetOrders()
+        {
+            return CreatedOrders.OrderByDescending(d => d.LastUpdate).ToList();
         }
     }
 }
