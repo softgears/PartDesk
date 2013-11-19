@@ -40,12 +40,21 @@ namespace PartDesk.Domain.Enums
         [EnumDescription("В стадии обработки")]
         InProgress = 3,
 
+        /// <summary>
+        /// Ожидает доставки
+        /// </summary>
         [EnumDescription("Ожидание доставки")]
         Logistic = 4,
 
+        /// <summary>
+        /// Заказ выполнен
+        /// </summary>
         [EnumDescription("Выполнен")]
         Completed = 5,
 
+        /// <summary>
+        /// Отменен
+        /// </summary>
         [EnumDescription("Отменен")]
         Canceled = 6
 

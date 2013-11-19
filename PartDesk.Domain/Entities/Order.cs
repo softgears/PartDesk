@@ -12,6 +12,7 @@
 
 using System;
 using System.Linq;
+using PartDesk.Domain.Enums;
 
 namespace PartDesk.Domain.Entities
 {
@@ -36,7 +37,34 @@ namespace PartDesk.Domain.Entities
         /// <returns></returns>
         public string GetStatus()
         {
-            
+            return ((OrderStatus) Status).GetEnumMemberName();
+        }
+
+        /// <summary>
+        /// Возвращает количество уникальных наименований в заказе
+        /// </summary>
+        /// <returns></returns>
+        public int GetTypesCount()
+        {
+            return 0;
+        }
+
+        /// <summary>
+        /// Возвращает общее количество элементов в заказе
+        /// </summary>
+        /// <returns></returns>
+        public int GetTotalCount()
+        {
+            return 0;
+        }
+
+        /// <summary>
+        /// Возвращает общую стоимость заказа
+        /// </summary>
+        /// <returns></returns>
+        public string GetTotalPrice()
+        {
+            return String.Format("{0:c}", 0);
         }
     }
 }

@@ -115,6 +115,9 @@
                                 Автор
                             </th>
                             <th>
+                                Клиент
+                            </th>
+                            <th>
                                 Наименований
                             </th>
                             <th>
@@ -133,7 +136,7 @@
                         @if (orders.Count == 0)
                         {
                             <tr>
-                                <td colspan="8">
+                                <td colspan="10">
                                     Не найдено активных заказов
                                 </td>
                             </tr>
@@ -150,10 +153,13 @@
                                         @order.GetStatus()
                                     </td>
                                     <td>
-                                        <a href="/manage/users/@order.ManagerId/info">@order.ManagedOrders.GetFioSmall()</a>
+                                        <a href="/manage/users/@order.ManagerId/info">@order.Manager.GetFioSmall()</a>
                                     </td>
                                     <td>
                                         <a href="/manage/users/@order.AuthorId/info">@order.Author.GetFioSmall()</a>
+                                    </td>
+                                    <td>
+                                        <a href="/manage/clients/@order.ClientId/info">@order.Client.ToString()</a>
                                     </td>
                                     <td>
                                         @order.GetTypesCount()
@@ -167,8 +173,8 @@
                                     <td>
                                         @order.LastUpdate.FormatDateTime()
                                     </td>
-                                    <td>
-                                        
+                                    <td style="width: 45px">
+                                        <a href="javascript:changeOrderStatus(@order.Id)" class="btn btn-xs btn-success tip" title="Изменить статус заказа"><i class="icon12 i-pen-4"></i></a>
                                     </td>
                                 </tr>
                             }

@@ -70,6 +70,7 @@
     <Compile Include="DAL\Repositories\RolesRepository.cs" />
     <Compile Include="DAL\Repositories\SMSNotificationMessagesRepository.cs" />
     <Compile Include="DAL\Repositories\UsersRepository.cs" />
+    <Compile Include="Entities\Client.cs" />
     <Compile Include="Entities\Company.cs" />
     <Compile Include="Entities\Order.cs" />
     <Compile Include="Entities\Permission.cs" />

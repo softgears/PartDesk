@@ -86,7 +86,7 @@
                                     <td style="width: 130px">
                                         <a href="/manage/users/?CompanyId=@comp.Id" class="btn btn-xs btn-info tip" title="Список пользователей компании"><i class="icon12 i-users-3"></i></a>
                                         <a href="/manage/orders/?CompanyId=@comp.Id" class="btn btn-xs btn-success tip" title="Список заказов компании"><i class="icon12 i-cart-2"></i></a>
-                                        <a href="/manage/companies/@comp.Id/delete" class="btn btn-xs btn-danger tip" title="Удалить компанию из системы"><i class="icon12 i-remove"></i></a>
+                                        <a href="/manage/companies/@comp.Id/delete" class="btn btn-xs btn-danger tip" onclick="return confirm('Вы действительно хотите удалить эту компанию?')" title="Удалить компанию из системы"><i class="icon12 i-remove"></i></a>
                                     </td>
                                 </tr>
                             }

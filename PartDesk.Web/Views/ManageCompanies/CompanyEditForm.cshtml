@@ -1,6 +1,6 @@
 ﻿@model PartDesk.Domain.Entities.Company
 
-<form action="/manage/companies/save" id="company-form" role="form" class="form-horizontal">
+<form action="/manage/companies/save" id="company-form" role="form" class="form-horizontal" enctype="multipart/form-data" method="POST">
     @Html.HiddenFor(m => m.Id)
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -9,6 +9,20 @@
             <a href="#" class="minimize"></a>
         </div>
         <div class="panel-body">
+            <div class="page-header">
+                <h4>Общие сведения</h4>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label" for="company-lt-field">Тип организации</label>
+                <div class="col-lg-10">
+                    <select class="form-control" name="LegalType" id="company-lt-field">
+                        <option value="0" @(Model.LegalType == 0 ? "selected=selected" : "")>ИП</option>
+                        <option value="1" @(Model.LegalType == 1 ? "selected=selected" : "")>ООО</option>
+                        <option value="2" @(Model.LegalType == 2 ? "selected=selected" : "")>ЗАО</option>
+                        <option value="3" @(Model.LegalType == 3 ? "selected=selected" : "")>ОАО</option>
+                    </select>
+                </div>
+            </div>
             <div class="form-group">
                 <label class="col-lg-2 control-label" for="company-name-field">Наименование компании</label>
                 <div class="col-lg-10">
@@ -34,10 +48,130 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-lg-2 control-label" for="company-address-field">Адрес</label>
+                <label class="col-lg-2 control-label" for="company-address-field">Физический адрес</label>
                 <div class="col-lg-10">
                     <textarea class="form-control" name="Address" id="company-address-field">@Model.Address</textarea>
                 </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label" for="company-contact-person-field">Контактное лицо</label>
+                <div class="col-lg-10">
+                    <input class="form-control" name="ContactPerson" type="text" id="company-contact-person-field" value="@Model.ContactPerson">
+                </div>
+            </div>
+            <div class="page-header">
+                <h4>Реквизиты</h4>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label" for="company-inn-field">ИНН</label>
+                <div class="col-lg-10">
+                    <input class="form-control" name="INN" type="text" id="company-inn-field" value="@Model.INN">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label" for="company-inn-field">ОГРН</label>
+                <div class="col-lg-10">
+                    <input class="form-control" name="OGRN" type="text" id="company-ogrn-field" value="@Model.OGRN">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label" for="company-kpp-field">ОГРН</label>
+                <div class="col-lg-10">
+                    <input class="form-control" name="KPP" type="text" id="company-kpp-field" value="@Model.KPP">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label" for="company-okpo-field">ОКПО</label>
+                <div class="col-lg-10">
+                    <input class="form-control" name="OKPO" type="text" id="company-okpo-field" value="@Model.OKPO">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label" for="company-cphone-field">Контактный телефон</label>
+                <div class="col-lg-10">
+                    <input class="form-control" name="ContactPhone" type="text" id="company-cphone-field" value="@Model.ContactPhone">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label" for="company-fax-field">Факс</label>
+                <div class="col-lg-10">
+                    <input class="form-control" name="Fax" type="text" id="company-fax-field" value="@Model.Fax">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label" for="company-dfio-field">Ф.И.О. Руководителя</label>
+                <div class="col-lg-10">
+                    <input class="form-control" name="DirectorFIO" type="text" id="company-dfio-field" value="@Model.DirectorFIO">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label" for="company-laddress-field">Юридический адрес</label>
+                <div class="col-lg-10">
+                    <textarea class="form-control" name="LegalAddress" id="company-laddress-field">@Model.LegalAddress</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label" for="company-ldoc-field">Правоустанавливающий документ</label>
+                <div class="col-lg-10">
+                    <input class="form-control" name="LegalDocument" type="text" id="company-ldoc-field" value="@Model.LegalDocument">
+                </div>
+            </div>
+            <div class="page-header">
+                <h4>Банковские реквизиты</h4>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label" for="company-rnumber-field">Рассчетный счет</label>
+                <div class="col-lg-10">
+                    <input class="form-control" name="AccountRNumber" type="text" id="company-rnumber-field" value="@Model.AccountRNumber">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label" for="company-knumber-field">Корреспондентский счет</label>
+                <div class="col-lg-10">
+                    <input class="form-control" name="AccountKNumber" type="text" id="company-knumber-field" value="@Model.AccountKNumber">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label" for="company-bik-field">БИК Банка</label>
+                <div class="col-lg-10">
+                    <input class="form-control" name="AccountBankBIK" type="text" id="company-bik-field" value="@Model.AccountBankBIK">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label" for="company-bank-field">Наименование Банка</label>
+                <div class="col-lg-10">
+                    <input class="form-control" name="AccountBankName" type="text" id="company-bank-field" value="@Model.AccountBankName">
+                </div>
+            </div>
+            <div class="page-header">
+                <h4>Паспортные данные</h4>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label" for="company-pnumber-field">Серия и номер</label>
+                <div class="col-lg-10">
+                    <input class="form-control" name="PassportNumber" type="text" id="company-pnumber-field" value="@Model.PassportNumber">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label" for="company-pissuedby-field">Кем выдан</label>
+                <div class="col-lg-10">
+                    <input class="form-control" name="PassportIssuedBy" type="text" id="company-pissuedby-field" value="@Model.PassportIssuedBy">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label" for="company-pdivcode-field">Код подразделения</label>
+                <div class="col-lg-10">
+                    <input class="form-control" name="PassportDivisionCode" type="text" id="company-pdivcode-field" value="@Model.PassportDivisionCode">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label" for="company-pissuedate-field">Дата выдачи</label>
+                <div class="col-lg-10">
+                    <input class="form-control" name="PassportIssueDate" type="text" id="company-pissuedate-field" value="@Model.PassportIssueDate">
+                </div>
+            </div>
+            <div class="page-header">
+                <h4>Дополнительно</h4>
             </div>
             @if (!String.IsNullOrEmpty(Model.Logo))
             {
@@ -52,7 +186,7 @@
             <div class="form-group">
                 <label class="col-lg-2 control-label" for="logofile-field">Логотип</label>
                 <div class="col-lg-10">
-                    <input type="file" name="Logo" id="logo-file-field" />
+                    <input type="file" name="LogoFile" id="logo-file-field" />
                 </div>
             </div>
             <div class="form-group">
@@ -77,24 +211,24 @@
 </form>
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#company-form").validate({            
-           rules: {
-               Name: {
-                   required: true,
-                   maxlength: 255
-               },
-               Email: {
-                   required: true,
-                   email: true
-               },
-               Phone: {
-                   required: true,
-                   maxlength: 20
-               },
-               City: {
-                   required: true
-               }
-           } 
+        $("#company-form").validate({
+            rules: {
+                Name: {
+                    required: true,
+                    maxlength: 255
+                },
+                Email: {
+                    required: true,
+                    email: true
+                },
+                Phone: {
+                    required: true,
+                    maxlength: 20
+                },
+                City: {
+                    required: true
+                }
+            }
         });
         $("#company-phone-field").mask("9 (999) 999-99-99");
     });
