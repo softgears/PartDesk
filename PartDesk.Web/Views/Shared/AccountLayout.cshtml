@@ -1,4 +1,5 @@
-﻿@using PartDesk.Web.Classes.Ext
+﻿@using PartDesk.Domain.Entities
+@using PartDesk.Web.Classes.Ext
 @{
     Layout = null;
 }
@@ -116,6 +117,8 @@
                 <i class="icon16 i-arrow-8"></i>
             </button>
             <div class="collapse navbar-collapse" id="navbar-to-collapse">
+                @if (ViewContext.CurrentUser().HasPermission(Permission.SearchParts))
+                {
                 <form id="top-search" class="navbar-form navbar-left" role="search">
                     <div class="input-group">
                         <input type="text" name="tsearch" id="tsearch" placeholder="Введите артикул детали" class="search-query form-control">
@@ -124,8 +127,11 @@
                         </span>
                     </div>
                 </form>
+                }
                 <ul class="nav navbar-nav pull-right">
                     <li class="divider-vertical"></li>
+                    @if (ViewContext.CurrentUser().HasPermission(Permission.MakeOrder))
+                    {
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="icon24 i-cart-2"></i>
@@ -141,6 +147,7 @@
                         </ul>
                     </li>
                     <li class="divider-vertical"></li>
+                    }
                     <li class="dropdown user">
                         <a href="#" class="dropdown-toggle avatar" data-toggle="dropdown">
                             <img src="@ViewContext.CurrentUser().GetAvatar()" alt="@ViewContext.CurrentUser().GetFioSmall()">
@@ -181,12 +188,17 @@
                                 <span class="txt">Сводка</span>
                             </a>
                         </li>
+                        @if (ViewContext.CurrentUser().HasPermission(Permission.SearchParts))
+                        {
                         <li>
                             <a href="/search">
                                 <span class="icon"><i class="icon20 i-search-2"></i></span>
                                 <span class="txt">Поиск запчастей</span>
                             </a>
                         </li>
+                        }
+                        @if (ViewContext.CurrentUser().HasPermission(Permission.MakeOrder))
+                        {
                         <li>
                             <a href="#orders">
                                 <span class="icon"><i class="icon20 i-menu-6"></i></span>
@@ -213,62 +225,87 @@
                                 </li>
                             </ul>
                         </li>
+                        }
+                        @if (ViewContext.CurrentUser().HasAdministrativePermission())
+                        {
                         <li>
                             <a href="#">
                                 <span class="icon"><i class="icon20 i-cogs"></i></span>
                                 <span class="txt">Администрирование</span>
                             </a>
                             <ul class="sub">
+                                @if (ViewContext.CurrentUser().HasPermission(Permission.ManageCompanies))
+                                {
                                 <li>
                                     <a href="/manage/companies">
                                         <span class="icon"><i class="icon20 i-tshirt"></i></span>
                                         <span class="txt">Компании</span>
                                     </a>
                                 </li>
+                                }
+                                @if (ViewContext.CurrentUser().HasPermission(Permission.ManageUsers))
+                                {
                                 <li>
                                     <a href="/manage/users">
                                         <span class="icon"><i class="icon20 i-users-3"></i></span>
                                         <span class="txt">Пользователи</span>
                                     </a>
                                 </li>
+                                }
+                                @if (ViewContext.CurrentUser().HasPermission(Permission.ManageRoles))
+                                {
                                 <li>
                                     <a href="/manage/roles">
                                         <span class="icon"><i class="icon20 i-user-5"></i></span>
                                         <span class="txt">Роли</span>
                                     </a>
                                 </li>
+                                }
+                                @if (ViewContext.CurrentUser().HasPermission(Permission.ManageOrders))
+                                {
                                 <li>
                                     <a href="/manage/orders">
                                         <span class="icon"><i class="icon20 i-list-5"></i></span>
                                         <span class="txt">Заказы</span>
                                     </a>
                                 </li>
+                                }
+                                @if (ViewContext.CurrentUser().HasPermission(Permission.ManageSupport))
+                                {
                                 <li>
                                     <a href="/manage/support">
                                         <span class="icon"><i class="icon20 i-heart"></i></span>
                                         <span class="txt">Тех. поддержка</span>
                                     </a>
                                 </li>
+                                }
+                                @if (ViewContext.CurrentUser().HasPermission(Permission.ManageSettings))
+                                {
                                 <li>
                                     <a href="/manage/settings">
                                         <span class="icon"><i class="icon20 i-wrench-3"></i></span>
                                         <span class="txt">Настройки</span>
                                     </a>
                                 </li>
+                                }
                                 <li>
                                     <a href="/manage/stats">
                                         <span class="icon"><i class="icon20 i-chart"></i></span>
                                         <span class="txt">Статистика</span>
                                     </a>
                                 </li>
+                                @if (ViewContext.CurrentUser().HasPermission(Permission.ManageAudit))
+                                {
                                 <li>
                                     <a href="/manage/audit">
                                         <span class="icon"><i class="icon20 i-pen"></i></span>
                                         <span class="txt">Аудит</span>
                                     </a>
                                 </li>
+                                }
                             </ul>
                         </li>
+                        }
                     </ul>
                 </nav>
                 <!-- End #mainnav -->

@@ -21,7 +21,7 @@ namespace PartDesk.Web.Controllers
         /// Отображает список зарегистрированных системных ролей
         /// </summary>
         /// <returns></returns>
-        [Route("manage/roles")][AuthorizationCheck()]
+        [Route("manage/roles")][AuthorizationCheck(Permission.ManageRoles)]
         public ActionResult Index()
         {
             // Репозиторий
@@ -38,7 +38,8 @@ namespace PartDesk.Web.Controllers
         /// Отображает форму создания новой роли
         /// </summary>
         /// <returns></returns>
-        [Route("manage/roles/add")][AuthorizationCheck()]
+        [Route("manage/roles/add")]
+        [AuthorizationCheck(Permission.ManageRoles)]
         public ActionResult Add()
         {
             PushNavigationItem("Роли", "/manage/roles");
@@ -52,7 +53,8 @@ namespace PartDesk.Web.Controllers
         /// </summary>
         /// <param name="id">Идентификатор роли</param>
         /// <returns></returns>
-        [Route("manage/roles/{id}/edit")][AuthorizationCheck()]
+        [Route("manage/roles/{id}/edit")]
+        [AuthorizationCheck(Permission.ManageRoles)]
         public ActionResult Edit(long id)
         {
             // Репозиторий
@@ -75,7 +77,8 @@ namespace PartDesk.Web.Controllers
         /// </summary>
         /// <param name="id">Идентификатор роли</param>
         /// <returns></returns>
-        [Route("manage/roles/{id}/delete")][AuthorizationCheck()]
+        [Route("manage/roles/{id}/delete")]
+        [AuthorizationCheck(Permission.ManageRoles)]
         public ActionResult Delete(long id)
         {
             // Репозиторий
@@ -114,7 +117,7 @@ namespace PartDesk.Web.Controllers
         /// <param name="collection">Коллекция</param>
         /// <returns></returns>
         [Route("manage/roles/save")]
-        [AuthorizationCheck()]
+        [AuthorizationCheck(Permission.ManageRoles)]
         [HttpPost]
         public ActionResult Save(Role model, FormCollection collection)
         {

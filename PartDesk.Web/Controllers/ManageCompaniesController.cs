@@ -23,7 +23,7 @@ namespace PartDesk.Web.Controllers
         /// Отображает список зарегистрированных компаний в системе
         /// </summary>
         /// <returns></returns>
-        [AuthorizationCheck()]
+        [AuthorizationCheck(Permission.ManageCompanies)]
         [Route("manage/companies")]
         public ActionResult Index()
         {
@@ -46,7 +46,7 @@ namespace PartDesk.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [Route("manage/companies/add")]
-        [AuthorizationCheck()]
+        [AuthorizationCheck(Permission.ManageCompanies)]
         public ActionResult Add()
         {
             // Навигационная цепочка
@@ -62,7 +62,7 @@ namespace PartDesk.Web.Controllers
         /// <param name="id">Идентификатор компании</param>
         /// <returns></returns>
         [Route("manage/companies/{id}/edit")]
-        [AuthorizationCheck()]
+        [AuthorizationCheck(Permission.ManageCompanies)]
         public ActionResult Edit(long id)
         {
             // Репозиторий
@@ -89,7 +89,8 @@ namespace PartDesk.Web.Controllers
         /// <param name="collection">Коллекция данных форм</param>
         /// <returns></returns>
         [HttpPost]
-        [Route("manage/companies/save")][AuthorizationCheck]
+        [Route("manage/companies/save")]
+        [AuthorizationCheck(Permission.ManageCompanies)]
         public ActionResult Save(Company model, FormCollection collection)
         {
             var rep = Locator.GetService<ICompaniesRepository>();
@@ -183,7 +184,8 @@ namespace PartDesk.Web.Controllers
         /// </summary>
         /// <param name="id">Идентификатор компании</param>
         /// <returns></returns>
-        [Route("manage/companies/{id}/delete")][AuthorizationCheck]
+        [Route("manage/companies/{id}/delete")]
+        [AuthorizationCheck(Permission.ManageCompanies)]
         public ActionResult Delete(long id)
         {
             // репозиторий

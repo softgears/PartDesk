@@ -25,7 +25,7 @@ namespace PartDesk.Web.Controllers
         /// </summary>
         /// <param name="model">Модель фильтрации</param>
         /// <returns></returns>
-        [Route("manage/users/")]
+        [Route("manage/users/")][AuthorizationCheck(Permission.ManageUsers)]
         public ActionResult Index(ManageUsersListModel model)
         {
             // Репозиторий
@@ -51,7 +51,8 @@ namespace PartDesk.Web.Controllers
         /// </summary>
         /// <param name="CompanyId">Идентификатор компании выбранной при создании по умолчанию</param>
         /// <returns></returns>
-        [Route("manage/users/add")][AuthorizationCheck()]
+        [Route("manage/users/add")]
+        [AuthorizationCheck(Permission.ManageUsers)]
         public ActionResult CreateUser(long? CompanyId)
         {
             PushNavigationItem("Пользователи","/manage/users");
@@ -69,7 +70,9 @@ namespace PartDesk.Web.Controllers
         /// <param name="Password">Пароль</param>
         /// <param name="PasswordConfirm">Подтверждение пароля</param>
         /// <returns></returns>
-        [Route("manage/users/create")][HttpPost][AuthorizationCheck]
+        [Route("manage/users/create")]
+        [HttpPost]
+        [AuthorizationCheck(Permission.ManageUsers)]
         public ActionResult Create(User user, string Password, string PasswordConfirm)
         {
             // Реп
@@ -110,7 +113,8 @@ namespace PartDesk.Web.Controllers
         /// </summary>
         /// <param name="id">Идентификатор пользователя</param>
         /// <returns></returns>
-        [AuthorizationCheck()][Route("manage/users/{id}/info")]
+        [AuthorizationCheck(Permission.ManageUsers)]
+        [Route("manage/users/{id}/info")]
         public ActionResult Info(long id)
         {
             var rep = Locator.GetService<IUsersRepository>();
@@ -135,7 +139,9 @@ namespace PartDesk.Web.Controllers
         /// <param name="RoleId">Идентификатор оли</param>
         /// <param name="Status">Статус пользователя</param>
         /// <returns></returns>
-        [AuthorizationCheck()][Route("manage/users/update-info")][HttpPost]
+        [AuthorizationCheck(Permission.ManageUsers)]
+        [Route("manage/users/update-info")]
+        [HttpPost]
         public ActionResult UpdateCard(long id,long CompanyId, long RoleId, short Status)
         {
             var rep = Locator.GetService<IUsersRepository>();
