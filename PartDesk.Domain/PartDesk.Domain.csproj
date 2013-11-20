@@ -74,6 +74,7 @@
     <Compile Include="Entities\Company.cs" />
     <Compile Include="Entities\Order.cs" />
     <Compile Include="Entities\Permission.cs" />
+    <Compile Include="Entities\Role.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Enums\EnumDescriptionAttribute.cs" />
     <Compile Include="Enums\EnumUtils.cs" />
