@@ -1,0 +1,104 @@
+﻿@using PartDesk.Web.Classes.Ext
+@model PartDesk.Domain.Entities.Client
+
+@{
+    ViewBag.Title = "Редактирование клиента "+Model.ToString();
+    Layout = "../Shared/AccountLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        @* Свойства клиента *@
+        @Html.Partial("ClientEditForm", Model)
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        @* Заказы клиента *@
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="icon"><i class="icon20 i-cart-3"></i></div>
+                <h4>Заказы клиента @Model.ToString()</h4>
+                <a href="#" class="minimize"></a>
+            </div>
+            <div class="panel-body">
+                @{
+                    var orders = Model.GetOrders();
+                }
+                <table class="table table-striped table-bordered table-hover" id="orders-table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Номер
+                            </th>
+                            <th>
+                                Статус
+                            </th>
+                            <th>
+                                Менеджер
+                            </th>
+                            <th>
+                                Автор
+                            </th>
+                            <th>
+                                Наименований
+                            </th>
+                            <th>
+                                Общее кол-во
+                            </th>
+                            <th>
+                                Стоимость
+                            </th>
+                            <th>
+                                Дата обновления
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (orders.Count == 0)
+                        {
+                            <tr>
+                                <td colspan="9">
+                                    Не найдено активных заказов
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            foreach (var order in orders)
+                            {
+                                <tr>
+                                    <td>
+                                        <a href="/orders/@order.Id/edit">@order.Id</a>
+                                    </td>
+                                    <td>
+                                        @order.GetStatus()
+                                    </td>
+                                    <td>
+                                        @order.Manager.GetFioSmall()
+                                    </td>
+                                    <td>
+                                        @order.Author.GetFioSmall()
+                                    </td>
+                                    <td>
+                                        @order.GetTypesCount()
+                                    </td>
+                                    <td>
+                                        @order.GetTotalCount()
+                                    </td>
+                                    <td>
+                                        @order.GetTotalPrice()
+                                    </td>
+                                    <td>
+                                        @order.LastUpdate.FormatDateTime()
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

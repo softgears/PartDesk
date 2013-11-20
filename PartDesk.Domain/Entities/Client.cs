@@ -11,6 +11,9 @@
 // ========
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using PartDesk.Domain.Utils;
 
 namespace PartDesk.Domain.Entities
@@ -29,6 +32,24 @@ namespace PartDesk.Domain.Entities
         public override string ToString()
         {
             return String.Format("{0} {1} {2} ({3})", LastName, FirstName, SurName,Phone.FormatPhoneNumber());
+        }
+
+        /// <summary>
+        /// Количество заказов, произведенное данным клиентом
+        /// </summary>
+        /// <returns></returns>
+        public int GetOrdersCount()
+        {
+            return Orders.Count;
+        }
+
+        /// <summary>
+        /// Список заказов по указанному клиенту
+        /// </summary>
+        /// <returns></returns>
+        public IList<Order> GetOrders()
+        {
+            return Orders.OrderByDescending(o => o.LastUpdate).ToList();
         }
     }
 }

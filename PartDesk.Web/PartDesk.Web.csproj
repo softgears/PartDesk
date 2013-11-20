@@ -129,6 +129,7 @@
     <Compile Include="Classes\WebLayer.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ClientsController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\ManageCompaniesController.cs" />
     <Compile Include="Controllers\ManageRolesController.cs" />
@@ -1216,6 +1217,18 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\ManageRoles\EditRole.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Clients\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Clients\Create.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Clients\Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Clients\ClientEditForm.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
