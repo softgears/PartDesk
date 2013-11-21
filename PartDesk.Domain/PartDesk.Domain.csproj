@@ -68,6 +68,7 @@
     <Compile Include="DAL\Repositories\OrdersRepository.cs" />
     <Compile Include="DAL\Repositories\PermissionsRepository.cs" />
     <Compile Include="DAL\Repositories\RolesRepository.cs" />
+    <Compile Include="DAL\Repositories\SettignsRepository.cs" />
     <Compile Include="DAL\Repositories\SMSNotificationMessagesRepository.cs" />
     <Compile Include="DAL\Repositories\UsersRepository.cs" />
     <Compile Include="Entities\Client.cs" />
@@ -79,6 +80,8 @@
     <Compile Include="Enums\EnumDescriptionAttribute.cs" />
     <Compile Include="Enums\EnumUtils.cs" />
     <Compile Include="Enums\OrderStatus.cs" />
+    <Compile Include="Enums\PartVendor.cs" />
+    <Compile Include="Enums\SettingDataType.cs" />
     <Compile Include="Enums\UserStatus.cs" />
     <Compile Include="Interfaces\Cache\IStringCache.cs" />
     <Compile Include="Interfaces\Notifications\IMailNotificationManager.cs" />
@@ -90,6 +93,7 @@
     <Compile Include="Interfaces\Repositories\IOrdersRepository.cs" />
     <Compile Include="Interfaces\Repositories\IPermissionsRepository.cs" />
     <Compile Include="Interfaces\Repositories\IRolesRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ISettingsRepository.cs" />
     <Compile Include="Interfaces\Repositories\ISMSNotificationMessagesRepository.cs" />
     <Compile Include="Interfaces\Repositories\IUsersRepository.cs" />
     <Compile Include="IoC\Locator.cs" />

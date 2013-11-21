@@ -133,6 +133,7 @@
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\ManageCompaniesController.cs" />
     <Compile Include="Controllers\ManageRolesController.cs" />
+    <Compile Include="Controllers\ManageSettingsController.cs" />
     <Compile Include="Controllers\ManageUsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1229,6 +1230,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Clients\ClientEditForm.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\ManageSettings\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
