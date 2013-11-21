@@ -40,6 +40,10 @@ namespace PartDesk.Domain.Search
             {
                 vendors.Add(new AutoTradeSearcher());
             }
+            if (settingsRep.GetValue<bool>("search_mxgroup"))
+            {
+                vendors.Add(new MXGroupSearcher());
+            }
 
             // Выбираем данные параллельно
             var fetched = vendors.AsParallel().Select(v => v.Search(article));
@@ -48,7 +52,7 @@ namespace PartDesk.Domain.Search
             var result = new List<SearchResultItem>();
             foreach (var fetch in fetched)
             {
-                result.AddRange(fetch);
+                result.AddRange(fetch.Where(r => r.Quantity != "0"));
             }
             return result;
         }

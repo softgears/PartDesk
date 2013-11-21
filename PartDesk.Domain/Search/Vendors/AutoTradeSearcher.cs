@@ -42,7 +42,6 @@ namespace PartDesk.Domain.Search.Vendors
         {
             using (var scope = Locator.BeginNestedHttpRequestScope())
             {
-
                 // Инициаилизируем
                 var settingsRep = Locator.GetService<ISettingsRepository>();
                 var apiKey = settingsRep.GetValue<string>("api_autotrade_key");
@@ -66,7 +65,7 @@ namespace PartDesk.Domain.Search.Vendors
                             Article = item.Article,
                             VendorId = item.InnerId,
                             IsCross = false,
-                            Quantity = item.Stocks.Values.Max(v => v.QuantityPacked + v.QuantityUnpacked),
+                            Quantity = item.Stocks.Values.Max(v => v.QuantityPacked + v.QuantityUnpacked).ToString(),
                             Name = item.Name,
                             Vendor = PartVendor.Autotrade,
                             VendorPrice = item.Price
@@ -82,7 +81,7 @@ namespace PartDesk.Domain.Search.Vendors
                                     Article = sub.Article,
                                     VendorId = sub.InnerId,
                                     IsCross = false,
-                                    Quantity = sub.Stocks.Values.Max(v => v.QuantityPacked + v.QuantityUnpacked),
+                                    Quantity = sub.Stocks.Values.Max(v => v.QuantityPacked + v.QuantityUnpacked).ToString(),
                                     Name = sub.Name,
                                     Vendor = PartVendor.Autotrade,
                                     VendorPrice = sub.Price

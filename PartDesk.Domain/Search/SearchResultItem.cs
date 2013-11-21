@@ -44,12 +44,12 @@ namespace PartDesk.Domain.Search
         /// <summary>
         /// Количество остатков на складе поставщика
         /// </summary>
-        public long Quantity { get; set; }
+        public string Quantity { get; set; }
 
         /// <summary>
         /// Цена на запчасть у поставщика
         /// </summary>
-        public decimal VendorPrice { get; set; }
+        public decimal? VendorPrice { get; set; }
 
         /// <summary>
         /// Запчасть является кроссом т.е. аналогом от оригинала
