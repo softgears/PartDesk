@@ -12,8 +12,10 @@
 
 using Autofac;
 using PartDesk.Domain.Interfaces.Notifications;
+using PartDesk.Domain.Interfaces.Search;
 using PartDesk.Domain.Notifications.Mailing;
 using PartDesk.Domain.Notifications.SMS;
+using PartDesk.Domain.Search;
 
 namespace PartDesk.Domain.Utils
 {
@@ -34,6 +36,7 @@ namespace PartDesk.Domain.Utils
         {
             builder.RegisterType<UniSenderMailNotificationManager>().As<IMailNotificationManager>().SingleInstance();
             builder.RegisterType<SMSNotificationManager>().As<ISMSNotificationManager>().SingleInstance();
+            builder.RegisterType<PartDeskSearcher>().As<IPartDeskSearch>();
         }
     }
 }

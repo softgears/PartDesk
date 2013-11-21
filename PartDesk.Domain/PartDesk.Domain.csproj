@@ -96,6 +96,8 @@
     <Compile Include="Interfaces\Repositories\ISettingsRepository.cs" />
     <Compile Include="Interfaces\Repositories\ISMSNotificationMessagesRepository.cs" />
     <Compile Include="Interfaces\Repositories\IUsersRepository.cs" />
+    <Compile Include="Interfaces\Search\IPartDeskSearch.cs" />
+    <Compile Include="Interfaces\Search\IVendorSearcher.cs" />
     <Compile Include="IoC\Locator.cs" />
     <Compile Include="Notifications\Mailing\MailConnectionString.cs" />
     <Compile Include="Notifications\Mailing\MailNotificationManager.cs" />
@@ -113,6 +115,11 @@
     </Compile>
     <Compile Include="Routing\RouteAttribute.cs" />
     <Compile Include="Routing\RoutesManager.cs" />
+    <Compile Include="Search\Models\AutotradeGetItemsByListResponse.cs" />
+    <Compile Include="Search\Models\AutotradeRequestModel.cs" />
+    <Compile Include="Search\PartDeskSearcher.cs" />
+    <Compile Include="Search\SearchResultItem.cs" />
+    <Compile Include="Search\Vendors\AutoTradeSearcher.cs" />
     <Compile Include="Utils\DictionaryStringCache.cs" />
     <Compile Include="Utils\DomainLayer.cs" />
     <Compile Include="Utils\DynamicJsonObject.cs" />
@@ -134,7 +141,9 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>

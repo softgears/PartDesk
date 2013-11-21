@@ -1,0 +1,67 @@
+﻿@using PartDesk.Domain.Entities
+@using PartDesk.Web.Classes.Ext
+@model System.Collections.Generic.IList<PartDesk.Domain.Search.SearchResultItem>
+
+<table class="table table-striped table-bordered table-hover" id="search-table">
+    <thead>
+        <tr>
+            <th>
+                Артикул
+            </th>
+            <th>
+                Наименование
+            </th> 
+            <th>
+                Тип
+            </th>
+            <th>
+                Количество
+            </th>
+            <th>
+                Цена
+            </th>
+            <th>
+                
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Count == 0)
+        {
+            <tr>
+                <td colspan="6">
+                    К сожалению, товар с таким артикулом не найден
+                </td>
+            </tr>
+        }
+        else
+        {
+            foreach (var result in Model)
+            {
+                <tr data-article="@result.Article" data-id="@result.Id" data-quantity="@result.Quantity" data-price="@result.VendorPrice">
+                    <td>
+                        @result.Article
+                    </td>
+                    <td>
+                        @result.Name
+                    </td>
+                    <td>
+                        @(result.IsCross ? "Аналог":"Оригинал" )
+                    </td>
+                    <td>
+                        @result.Quantity
+                    </td>
+                    <td>
+                        @String.Format("{0:c}",result.VendorPrice)
+                    </td>
+                    <td style="width: 45px">
+                        @if (ViewContext.CurrentUser().HasPermission(Permission.MakeOrder))
+                        {
+                            <a href="#" class="btn btn-xs btn-success tip" title="Добавить позицию в заказ"><i class="icon12 i-cart-add"></i></a>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

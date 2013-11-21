@@ -1,0 +1,68 @@
+﻿@model dynamic
+
+@{
+    ViewBag.Title = "Поиск автозапчастей";
+    Layout = "../Shared/AccountLayout.cshtml";
+    string query = ViewBag.query;
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="icon"><i class="icon20 i-search-3"></i></div>
+                <h4>Поиска запчасти</h4>
+                <a href="#" class="minimize"></a>
+            </div>
+            <div class="panel-body">
+                <form action="/search/query" class="form-horizontal" id="search-form" method="POST">
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label" for="buttons">Артикул</label>
+                        <div class="col-lg-10">
+                            <div class="input-group">
+                                <input class="form-control" id="search-article-field" name="query" type="text" placeholder="Введите артикул запчасти" value="@query">
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-default">Искать</button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="icon"><i class="icon20 i-table"></i></div>
+                <h4>Результаты поиска</h4>
+                <a href="#" class="minimize"></a>
+            </div>
+            <div class="panel-body">
+                <div class="center" id="results-wrapper">
+                    Здесь отображаются результаты поиска
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#search-form").validate({
+            query: {
+                required: true,
+                maxlength: 20
+            },
+            submitHandler: function(form) {
+                // Аяксовая загрузка результата
+                $("#results-wrapper").html('<img src="/Content/genyx/images/preloaders/blue/2.gif" />').load("/search/query", { query: $("#search-article-field").val() }, function () {
+
+                });
+                return false;
+            }
+        });
+
+    });
+</script>

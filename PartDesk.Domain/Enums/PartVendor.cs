@@ -19,8 +19,8 @@ namespace PartDesk.Domain.Enums
         /// <summary>
         /// Autotrader.su
         /// </summary>
-        [EnumDescription("Autotrader.su")]
-        Autotrader = 1,
+        [EnumDescription("Autotrade.su")]
+        Autotrade = 1,
 
         /// <summary>
         /// Берг
@@ -38,6 +38,6 @@ namespace PartDesk.Domain.Enums
         /// ГК Автомеханика
         /// </summary>
         [EnumDescription("ГК Автомеханика")]
-        GKAutomechanics = 3
+        GKAutomechanics = 4
     }
 }
