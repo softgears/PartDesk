@@ -48,14 +48,60 @@
         </div>
     </div>
 </div>
+<div class="dialog" id="make-position-dialog" style="display: none">
+    <form id="make-form" method="POST" class="form-horizontal" role="form" action="/orders/add-position">
+        <div class="form-group">
+            <label class="col-lg-4 control-label" for="make-article-field">Артикул</label>
+            <div class="col-lg-8">
+                <input class="form-control disabled" readonly="readonly" name="Article" type="text" id="make-article-field">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-4 control-label" for="make-name-field">Наименование</label>
+            <div class="col-lg-8">
+                <input class="form-control disabled" readonly="readonly" name="Name" type="text" id="make-name-field">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-4 control-label" for="make-brand-field">Бренд</label>
+            <div class="col-lg-8">
+                <input class="form-control disabled" readonly="readonly" name="Brand" type="text" id="make-brand-field">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-4 control-label" for="make-price-field">Цена</label>
+            <div class="col-lg-8">
+                <input class="form-control disabled" readonly="readonly" name="Price" type="text" id="make-price-field">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-4 control-label" for="make-quantity-field">Количество</label>
+            <div class="col-lg-8">
+                <input class="form-control" name="Quantity" type="text" id="make-quantity-field">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-4 control-label" for="make-price-field">Общая цена</label>
+            <div class="col-lg-8">
+                <input class="form-control disabled" readonly="readonly" type="text" id="make-total-price-field">
+            </div>
+        </div>
+        <input type="hidden" name="UniqueId" id="make-id-field"/>
+        <input type="hidden" name="TotalQuantity" id="make-total-quantity-field"/>
+        <input type="hidden" name="VendorPrice" id="make-vendor-price-field"/>
+        <input type="hidden" name="Warehouse" id="make-warehouse-field"/>
+        <input type="hidden" name="WarehouseId" id="make-warehouse-id-field"/>
+        <input type="hidden" name="Margin" id="make-margin-field"/>
+    </form>
+</div>
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
         $("#search-form").validate({
             query: {
                 required: true,
                 maxlength: 20
             },
-            submitHandler: function(form) {
+            submitHandler: function (form) {
                 // Аяксовая загрузка результата
                 $("#results-wrapper").html('<img src="/Content/genyx/images/preloaders/blue/2.gif" />').load("/search/query", { query: $("#search-article-field").val() }, function () {
 
@@ -63,6 +109,20 @@
                 return false;
             }
         });
-
+        $("#make-form").validate({            
+            Quantity: {
+                required: true,
+                digits: true
+            },
+            submitHandler: function(form) {
+                // Отправляем используя ajax
+                $("#make-form").ajaxSubmit({                    
+                    dataType: 'json',
+                    success: function(data) {
+                        $("#make-position-dialog").dialog("close");
+                    }
+                });
+            }
+        });
     });
 </script>

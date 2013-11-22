@@ -118,5 +118,30 @@ namespace PartDesk.Domain.Entities
         {
             return CreatedOrders.OrderByDescending(d => d.LastUpdate).ToList();
         }
+
+        /// <summary>
+        /// Получает или создает активный неподтвержденный заказ
+        /// </summary>
+        /// <returns></returns>
+        public Order GetOrCreateCurrentOrder()
+        {
+            // Перебираем список заказов и ищем неподтвержденный
+            var activeOrder = CreatedOrders.FirstOrDefault(o => o.Status == 0);
+            if (activeOrder == null)
+            {
+                activeOrder = new Order()
+                {
+                    Author = this,
+                    ManagerId = -1,
+                    DateCreated = DateTime.Now,
+                    CompanyId = this.CompanyId,
+                    ClientId = -1,
+                    Status = 0
+                };
+                CreatedOrders.Add(activeOrder);
+            }
+
+            return activeOrder;
+        }
     }
 }

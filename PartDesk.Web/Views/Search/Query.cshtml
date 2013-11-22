@@ -2,7 +2,7 @@
 @using PartDesk.Web.Classes.Ext
 @model System.Collections.Generic.IList<PartDesk.Domain.Search.SearchResultItem>
 
-<table class="table table-striped table-bordered table-hover" id="search-table">
+<table class="table table-bordered table-hover" id="search-table">
     <thead>
         <tr>
             <th>
@@ -36,9 +36,9 @@
         }
         else
         {
-            foreach (var result in Model)
+            foreach (var result in Model.OrderByDescending(d => d.IsOriginal).ThenBy(d => d.VendorPrice))
             {
-                <tr data-article="@result.Article" data-id="@result.Id" data-quantity="@result.Quantity" data-price="@result.VendorPrice">
+                <tr data-article="@result.Article" data-id="@result.Id" data-name="@result.Name" data-quantity="@result.Quantity" data-vendor-price="@result.VendorPrice" data-warehouse="@result.Warehouse" data-warehouse-id="@result.WarehouseId" data-brand="@result.Brand" data-margin="@result.CalculateMargin()" data-price="@result.GetPrice(ViewContext.CurrentUser().Company)" class="@(result.IsOriginal ? "success":"")">
                     <td>
                         @result.Article
                     </td>
@@ -52,12 +52,12 @@
                         @result.Quantity
                     </td>
                     <td>
-                        @String.Format("{0:c}",result.VendorPrice)
+                        @String.Format("{0:c}",result.GetPrice(ViewContext.CurrentUser().Company))
                     </td>
                     <td style="width: 45px">
                         @if (ViewContext.CurrentUser().HasPermission(Permission.MakeOrder))
                         {
-                            <a href="#" class="btn btn-xs btn-success tip" title="Добавить позицию в заказ"><i class="icon12 i-cart-add"></i></a>
+                            <a href="#" class="btn btn-xs btn-success tip add" title="Добавить позицию в заказ"><i class="icon12 i-cart-add"></i></a>
                         }
                     </td>
                 </tr>
@@ -65,3 +65,45 @@
         }
     </tbody>
 </table>
+<script type="text/javascript">
+    $(".add").click(function() {
+        var tr = $(this).parent().parent();
+        var article = $(tr).data("article");
+        var name = $(tr).data("name");
+        var id = $(tr).data("id");
+        var totalQuantity = $(tr).data("quantity");
+        var vendorPrice = $(tr).data("vendor-price");
+        var warehouse = $(tr).data("warehouse");
+        var warehouseId = $(tr).data("warehouse-id");
+        var brand = $(tr).data("brand");
+        var margin = $(tr).data("margin");
+        var price = $(tr).data("price");
+        $("#make-article-field").val(article);
+        $("#make-name-field").val(name);
+        $("#make-id-field").val(id);
+        $("#make-total-quantity-field").val(totalQuantity);
+        $("#make-vendor-price-field").val(vendorPrice);
+        $("#make-warehouse-field").val(warehouse);
+        $("#make-warehouse-id-field").val(warehouseId);
+        $("#make-brand-field").val(brand);
+        $("#make-margin-field").val(margin);
+        $("#make-price-field").val(price);
+        $("#make-quantity-field").val(1);
+        var dialog = $("#make-position-dialog").dialog({            
+            modal: true,
+            title: 'Добавление позиции в заказ',
+            resizable: false,
+            dialogClass: 'dialog',
+            width: 450,
+            buttons: {
+                "Добавить": function() {
+                    $("#make-form").submit();
+                },
+                "Отмена": function() {
+                    dialog.dialog("close");
+                }
+            }
+        });
+        return false;
+    });
+</script>

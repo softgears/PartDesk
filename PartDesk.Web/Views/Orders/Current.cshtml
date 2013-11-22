@@ -1,0 +1,89 @@
+﻿@model PartDesk.Domain.Entities.Order
+
+@{
+    ViewBag.Title = "Формирование заказа";
+    Layout = "../Shared/AccountLayout.cshtml";
+    var items = Model.GetItems();
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="icon"><i class="icon20 i-table"></i></div>
+                <h4>Состав заказа</h4>
+                <a href="#" class="minimize"></a>
+            </div>
+            <!-- End .panel-heading -->
+            <div class="panel-body">
+                <p>
+                    <a href="/search" class="btn btn-info tip" title="Добавить новую позицию в заказ">Добавить позицию</a>    
+                </p>
+                <table class="table table-striped table-bordered table-hover" id="order-table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Артикул
+                            </th>
+                            <th>
+                                Наименование
+                            </th>
+                            <th>
+                                Бренд
+                            </th>
+                            <th>
+                                Цена
+                            </th>
+                            <th>
+                                Количество
+                            </th>
+                            <th>
+                                Стоимость
+                            </th>
+                            <th>
+
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (items.Count == 0)
+                        {
+                            <tr>
+                                <td colspan="7">Нет позиций в заказе</td>
+                            </tr>
+                        }
+                        else
+                        {
+                            foreach (var item in items)
+                            {
+                                <tr data-id="@item.Id" data-price="@item.Price">
+                                    <td>
+                                        @item.Article
+                                    </td>
+                                    <td>
+                                        @item.Name
+                                    </td>
+                                    <td>
+                                        @item.Brand
+                                    </td>
+                                    <td>
+                                        @String.Format("{0:c}",item.Price)
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input type="text" class="form-control" value="@item.Quantity" style="width: 90px" placeholder="Введите количество"/>
+                                    </td>
+                                    <td>
+                                        @String.Format("{0:c}",item.Price*item.Quantity)
+                                    </td>
+                                    <td style="width: 45px">
+                                        <a href="/orders/position/@item.Id/delete" class="btn btn-xs btn-danger tip" onclick="return confirm('Вы действительно хотите удалить эту позицию?')" title="Удалить позицию из заказа"><i class="icon12 i-remove"></i></a>    
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

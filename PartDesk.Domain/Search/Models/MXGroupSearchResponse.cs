@@ -83,6 +83,18 @@ namespace PartDesk.Domain.Search.Models
             /// </summary>
             [JsonProperty("brand")]
             public string Brand { get; set; }
+
+            /// <summary>
+            /// Наименование склада с предложением
+            /// </summary>
+            [JsonProperty("storename")]
+            public string StoreName { get; set; }
+
+            /// <summary>
+            /// Идентификатор склада с предложением
+            /// </summary>
+            [JsonProperty("storeid")]
+            public string StoreId { get; set; }
         }
 
         

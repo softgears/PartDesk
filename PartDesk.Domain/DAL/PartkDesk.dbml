@@ -93,6 +93,7 @@
       <Column Name="DeliveryAddress" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="DateCreated" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Association Name="Order_OrderStatusChangement" Member="OrderStatusChangements" ThisKey="Id" OtherKey="OrderId" Type="OrderStatusChangement" />
+      <Association Name="Order_OrderItem" Member="OrderItems" ThisKey="Id" OtherKey="OrderId" Type="OrderItem" />
       <Association Name="User_Order" Member="Author" ThisKey="AuthorId" OtherKey="Id" Type="User" IsForeignKey="true" />
       <Association Name="User_Order1" Member="Manager" ThisKey="ManagerId" OtherKey="Id" Type="User" IsForeignKey="true" />
       <Association Name="Client_Order" Member="Client" ThisKey="ClientId" OtherKey="Id" Type="Client" IsForeignKey="true" />
@@ -113,6 +114,17 @@
       <Column Name="DateModified" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Association Name="Client_Order" Member="Orders" ThisKey="Id" OtherKey="ClientId" Type="Order" />
       <Association Name="Company_Client" Member="Company" ThisKey="CompanyId" OtherKey="Id" Type="Company" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Settings" Member="Settings">
+    <Type Name="Setting">
+      <Column Name="Id" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="[Key]" Member="Key" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="[Group]" Member="Group" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Value" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="DataType" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="DateModified" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
     </Type>
   </Table>
   <Table Name="dbo.Companies" Member="Companies">
@@ -144,6 +156,7 @@
       <Column Name="PassportDivisionCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="PassportIssueDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
       <Column Name="PriceMargin" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="PersonalDiscount" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
       <Column Name="Status" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
       <Column Name="Subscription" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
       <Column Name="SubscriptionExpiration" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
@@ -154,15 +167,24 @@
       <Association Name="Company_Client" Member="Clients" ThisKey="Id" OtherKey="CompanyId" Type="Client" />
     </Type>
   </Table>
-  <Table Name="dbo.Settings" Member="Settings">
-    <Type Name="Setting">
+  <Table Name="dbo.OrderItems" Member="OrderItems">
+    <Type Name="OrderItem">
       <Column Name="Id" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="[Key]" Member="Key" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="[Group]" Member="Group" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
-      <Column Name="Value" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="DataType" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="OrderId" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="UniqueId" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Article" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Brand" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Vendor" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="Warehouse" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="WarehouseId" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="VendorPrice" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="Quantity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Price" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="Margin" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="DateCreated" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="DateModified" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Order_OrderItem" Member="Order" ThisKey="OrderId" OtherKey="Id" Type="Order" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
     </Type>
   </Table>
 </Database>

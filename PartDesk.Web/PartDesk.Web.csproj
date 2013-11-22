@@ -135,6 +135,7 @@
     <Compile Include="Controllers\ManageRolesController.cs" />
     <Compile Include="Controllers\ManageSettingsController.cs" />
     <Compile Include="Controllers\ManageUsersController.cs" />
+    <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1240,6 +1241,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Search\Query.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Orders\Current.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Orders\AddPosition.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

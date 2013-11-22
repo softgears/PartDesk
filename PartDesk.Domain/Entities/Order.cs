@@ -11,6 +11,8 @@
 // ========
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using PartDesk.Domain.Enums;
 
@@ -46,7 +48,7 @@ namespace PartDesk.Domain.Entities
         /// <returns></returns>
         public int GetTypesCount()
         {
-            return 0;
+            return OrderItems.Count;
         }
 
         /// <summary>
@@ -55,7 +57,7 @@ namespace PartDesk.Domain.Entities
         /// <returns></returns>
         public int GetTotalCount()
         {
-            return 0;
+            return OrderItems.Sum(oi => oi.Quantity);
         }
 
         /// <summary>
@@ -64,7 +66,16 @@ namespace PartDesk.Domain.Entities
         /// <returns></returns>
         public string GetTotalPrice()
         {
-            return String.Format("{0:c}", 0);
+            return String.Format("{0:c}", OrderItems.Sum(oi => oi.Margin * oi.Quantity));
+        }
+
+        /// <summary>
+        /// Возвращает все элементы заказа
+        /// </summary>
+        /// <returns></returns>
+        public IList<OrderItem> GetItems()
+        {
+            return OrderItems.ToList();
         }
     }
 }

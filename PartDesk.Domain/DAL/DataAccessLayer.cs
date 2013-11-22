@@ -40,7 +40,7 @@ namespace PartDesk.Domain.DAL
             builder.RegisterType<OrdersRepository>().As<IOrdersRepository>();
             builder.RegisterType<MailNotificationMessagesRepository>().As<IMailNotificationMessagesRepository>();
             builder.RegisterType<SMSNotificationMessagesRepository>().As<ISMSNotificationMessagesRepository>();
-            builder.RegisterType<SettignsRepository>().As<ISettingsRepository>();
+            builder.RegisterType<SettignsRepository>().As<ISettingsRepository>().InstancePerHttpRequest();
         }
     }
 }

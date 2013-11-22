@@ -165,6 +165,7 @@ namespace PartDesk.Web.Controllers
                 comp.PassportIssueDate = model.PassportIssueDate;
                 comp.PassportDivisionCode = model.PassportDivisionCode;
                 comp.Status = model.Status;
+                comp.PersonalDiscount = model.PersonalDiscount;
                 if (logoPath != null)
                 {
                     comp.Logo = logoPath;

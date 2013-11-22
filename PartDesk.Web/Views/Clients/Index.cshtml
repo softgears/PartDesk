@@ -73,7 +73,7 @@
                                         @client.DateCreated.FormatDateTime()
                                     </td>
                                     <td style="width: 90px">
-                                        <a href="/orders/?ClientId=@client.Id" class="btn btn-xs btn-success tip" title="Список заказов клиента"><i class="icon12 i-cart-2"></i></a>
+                                        <a href="/orders/client/@client.Id" class="btn btn-xs btn-success tip" title="Список заказов клиента"><i class="icon12 i-cart-2"></i></a>
                                         <a href="/clients/@client.Id/delete" class="btn btn-xs btn-danger tip" onclick="return confirm('Вы действительно хотите удалить этого клиента?')" title="Удалить клиента из системы"><i class="icon12 i-remove"></i></a>
                                     </td>
                                 </tr>

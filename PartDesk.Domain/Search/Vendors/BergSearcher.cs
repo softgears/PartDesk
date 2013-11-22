@@ -29,7 +29,7 @@ namespace PartDesk.Domain.Search.Vendors
     /// <summary>
     /// Поисковик по поставщику Berg
     /// </summary>
-    public class BergSearcher: IVendorSearcher
+    public class BergSearcher : IVendorSearcher
     {
         /// <summary>
         /// Выполняет поиск по указанному поставщике
@@ -43,12 +43,13 @@ namespace PartDesk.Domain.Search.Vendors
                 // Инициаилизируем
                 var settingsRep = Locator.GetService<ISettingsRepository>();
                 var apiKey = settingsRep.GetValue<string>("api_berg_key");
+                var availableWarehouses = settingsRep.GetValue<string>("api_berg_warehouse_names");
 
                 var result = new List<SearchResultItem>();
 
                 var url =
                     String.Format(
-                        "http://api.berg.ru/ordering/get_stock.json?items[0][resource_article]={0}&analogs=1&key={1}",article,apiKey);
+                        "http://api.berg.ru/ordering/get_stock.json?items[0][resource_article]={0}&analogs=1&key={1}", article, apiKey);
 
                 // Клиент
                 var request = HttpWebRequest.CreateHttp(url);
@@ -58,11 +59,17 @@ namespace PartDesk.Domain.Search.Vendors
                 {
                     var responseObj = request.GetResponse();
 
-                    ProcessReponse(result,responseObj);
+                    ProcessReponse(result, responseObj);
                 }
                 catch (WebException e)
                 {
-                    ProcessReponse(result,e.Response);
+                    ProcessReponse(result, e.Response);
+                }
+
+                // Фильтруем по именам складов
+                if (!String.IsNullOrEmpty(availableWarehouses))
+                {
+                    result = result.Where(i => !String.IsNullOrEmpty(i.Warehouse) && availableWarehouses.ToLower().Contains(i.Warehouse.ToLower())).ToList();
                 }
 
                 return result;
@@ -79,16 +86,22 @@ namespace PartDesk.Domain.Search.Vendors
             {
                 foreach (var resource in info.Resources.Where(r => r.Offers != null))
                 {
-                    list.Add(new SearchResultItem()
+                    foreach (var offer in resource.Offers)
                     {
-                        Article = resource.Article,
-                        Name = resource.Name,
-                        Vendor = PartVendor.BERG,
-                        VendorPrice = resource.Offers.Min(r => r.Price),
-                        Quantity = resource.Offers.Sum(r => r.Quantity),
-                        VendorId = resource.Id,
-                        Brand = resource.Brand.Name
-                    });
+                        list.Add(new SearchResultItem()
+                        {
+                            Article = resource.Article,
+                            Name = resource.Name,
+                            Vendor = PartVendor.BERG,
+                            VendorPrice = offer.Price,
+                            Quantity = offer.Quantity,
+                            VendorId = resource.Id,
+                            Brand = resource.Brand.Name,
+                            Warehouse = offer.Warehouse.Name,
+                            WarehouseId = offer.Warehouse.Id.ToString()
+                        });
+                    }
+
                 }
             }
         }

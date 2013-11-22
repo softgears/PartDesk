@@ -12,6 +12,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Web;
@@ -42,6 +43,7 @@ namespace PartDesk.Domain.Search.Vendors
                 var settingsRep = Locator.GetService<ISettingsRepository>();
                 var login = settingsRep.GetValue<string>("api_mxgroup_login");
                 var password = settingsRep.GetValue<string>("api_mxgroup_password");
+                var availableWarehouses = settingsRep.GetValue<string>("api_mxgroup_warehouse_names");
 
                 var result = new List<SearchResultItem>();
 
@@ -69,11 +71,19 @@ namespace PartDesk.Domain.Search.Vendors
                                 Name = res.Name,
                                 Quantity = res.Count.Contains("Out") ? 0 : Convert.ToInt32(res.Count),
                                 Vendor = PartVendor.MXGroup,
-                                VendorPrice = res.DiscountPrice != null ? Convert.ToDecimal(res.DiscountPrice.Replace('.',',')) : new decimal?()
+                                VendorPrice = res.DiscountPrice != null ? Convert.ToDecimal(res.DiscountPrice.Replace('.',',')) : new decimal?(),
+                                Warehouse = res.StoreName,
+                                WarehouseId = res.StoreId
                             });
                         }
                         
                     }
+                }
+
+                // Фильтруем по именам складов
+                if (!String.IsNullOrEmpty(availableWarehouses))
+                {
+                    result = result.Where(i => !String.IsNullOrEmpty(i.Warehouse) && availableWarehouses.ToLower().Contains(i.Warehouse.ToLower())).ToList();
                 }
                 
 
