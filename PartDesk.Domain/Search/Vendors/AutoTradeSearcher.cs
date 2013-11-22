@@ -64,8 +64,8 @@ namespace PartDesk.Domain.Search.Vendors
                         {
                             Article = item.Article,
                             VendorId = item.InnerId,
-                            IsCross = false,
-                            Quantity = item.Stocks.Values.Max(v => v.QuantityPacked + v.QuantityUnpacked).ToString(),
+                            Brand = item.Brand,
+                            Quantity = item.Stocks.Values.Max(v => v.QuantityPacked + v.QuantityUnpacked),
                             Name = item.Name,
                             Vendor = PartVendor.Autotrade,
                             VendorPrice = item.Price
@@ -80,11 +80,11 @@ namespace PartDesk.Domain.Search.Vendors
                                 {
                                     Article = sub.Article,
                                     VendorId = sub.InnerId,
-                                    IsCross = false,
-                                    Quantity = sub.Stocks.Values.Max(v => v.QuantityPacked + v.QuantityUnpacked).ToString(),
+                                    Quantity = sub.Stocks.Values.Max(v => v.QuantityPacked + v.QuantityUnpacked),
                                     Name = sub.Name,
                                     Vendor = PartVendor.Autotrade,
-                                    VendorPrice = sub.Price
+                                    VendorPrice = sub.Price,
+                                    Brand = sub.Brand
                                 });
                             }
                         }

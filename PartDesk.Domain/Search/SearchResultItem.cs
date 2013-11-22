@@ -44,7 +44,7 @@ namespace PartDesk.Domain.Search
         /// <summary>
         /// Количество остатков на складе поставщика
         /// </summary>
-        public string Quantity { get; set; }
+        public int Quantity { get; set; }
 
         /// <summary>
         /// Цена на запчасть у поставщика
@@ -52,9 +52,9 @@ namespace PartDesk.Domain.Search
         public decimal? VendorPrice { get; set; }
 
         /// <summary>
-        /// Запчасть является кроссом т.е. аналогом от оригинала
+        /// Бренд
         /// </summary>
-        public bool IsCross { get; set; }
+        public string Brand { get; set; }
 
         /// <summary>
         /// Абсолютный идентификатор запчасти в системе

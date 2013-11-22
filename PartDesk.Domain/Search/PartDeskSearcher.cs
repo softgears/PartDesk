@@ -44,6 +44,10 @@ namespace PartDesk.Domain.Search
             {
                 vendors.Add(new MXGroupSearcher());
             }
+            if (settingsRep.GetValue<bool>("search_berg"))
+            {
+                vendors.Add(new BergSearcher());
+            }
 
             // Выбираем данные параллельно
             var fetched = vendors.AsParallel().Select(v => v.Search(article));
@@ -52,7 +56,7 @@ namespace PartDesk.Domain.Search
             var result = new List<SearchResultItem>();
             foreach (var fetch in fetched)
             {
-                result.AddRange(fetch.Where(r => r.Quantity != "0"));
+                result.AddRange(fetch.Where(r => r.Quantity != 0));
             }
             return result;
         }

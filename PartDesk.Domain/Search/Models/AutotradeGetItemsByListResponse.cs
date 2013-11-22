@@ -126,6 +126,12 @@ namespace PartDesk.Domain.Search.Models
             /// </summary>
             [JsonProperty("itemSubs")]
             public Dictionary<string,AutoTradeGetItemsListItem> Subs { get; set; }
+
+            /// <summary>
+            /// Имя бренда
+            /// </summary>
+            [JsonProperty("brand")]
+            public string Brand { get; set; }
         }
 
         /// <summary>

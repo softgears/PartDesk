@@ -65,9 +65,9 @@ namespace PartDesk.Domain.Search.Vendors
                             {
                                 Article = res.Article,
                                 VendorId = res.Id,
-                                IsCross = false,
+                                Brand = res.Brand,
                                 Name = res.Name,
-                                Quantity = res.Count.Contains("Out") ? "0" : res.Count,
+                                Quantity = res.Count.Contains("Out") ? 0 : Convert.ToInt32(res.Count),
                                 Vendor = PartVendor.MXGroup,
                                 VendorPrice = res.DiscountPrice != null ? Convert.ToDecimal(res.DiscountPrice.Replace('.',',')) : new decimal?()
                             });

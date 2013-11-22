@@ -117,10 +117,12 @@
     <Compile Include="Routing\RoutesManager.cs" />
     <Compile Include="Search\Models\AutotradeGetItemsByListResponse.cs" />
     <Compile Include="Search\Models\AutotradeRequestModel.cs" />
+    <Compile Include="Search\Models\BergGetStockResponse.cs" />
     <Compile Include="Search\Models\MXGroupSearchResponse.cs" />
     <Compile Include="Search\PartDeskSearcher.cs" />
     <Compile Include="Search\SearchResultItem.cs" />
     <Compile Include="Search\Vendors\AutoTradeSearcher.cs" />
+    <Compile Include="Search\Vendors\BergSearcher.cs" />
     <Compile Include="Search\Vendors\MXGroupSearcher.cs" />
     <Compile Include="Utils\DictionaryStringCache.cs" />
     <Compile Include="Utils\DomainLayer.cs" />
