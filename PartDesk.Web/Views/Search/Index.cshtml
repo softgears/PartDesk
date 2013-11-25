@@ -48,58 +48,81 @@
         </div>
     </div>
 </div>
-<div class="dialog" id="make-position-dialog" style="display: none">
-    <form id="make-form" method="POST" class="form-horizontal" role="form" action="/orders/add-position">
-        <div class="form-group">
-            <label class="col-lg-4 control-label" for="make-article-field">Артикул</label>
-            <div class="col-lg-8">
-                <input class="form-control disabled" readonly="readonly" name="Article" type="text" id="make-article-field">
+<div class="modal fade" id="make-position-dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Добавление позиции</h4>
+            </div>
+            <div class="modal-body">
+                <form id="make-form" method="POST" class="form-horizontal" role="form" action="/orders/add-position">
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label" for="make-article-field">Артикул</label>
+                        <div class="col-lg-8">
+                            <input class="form-control disabled" readonly="readonly" name="Article" type="text" id="make-article-field">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label" for="make-name-field">Наименование</label>
+                        <div class="col-lg-8">
+                            <input class="form-control disabled" readonly="readonly" name="Name" type="text" id="make-name-field">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label" for="make-brand-field">Бренд</label>
+                        <div class="col-lg-8">
+                            <input class="form-control disabled" readonly="readonly" name="Brand" type="text" id="make-brand-field">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label" for="make-price-field">Цена</label>
+                        <div class="col-lg-8">
+                            <input class="form-control disabled" readonly="readonly" name="Price" type="text" id="make-price-field">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label" for="make-quantity-field">Количество</label>
+                        <div class="col-lg-8">
+                            <input class="form-control" name="Quantity" type="text" id="make-quantity-field">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label" for="make-total-price-field">Общая цена</label>
+                        <div class="col-lg-8">
+                            <input class="form-control disabled" readonly="readonly" type="text" id="make-total-price-field">
+                        </div>
+                    </div>
+                    <input type="hidden" name="UniqueId" id="make-id-field" />
+                    <input type="hidden" name="TotalQuantity" id="make-total-quantity-field" />
+                    <input type="hidden" name="VendorPrice" id="make-vendor-price-field" />
+                    <input type="hidden" name="Warehouse" id="make-warehouse-field" />
+                    <input type="hidden" name="WarehouseId" id="make-warehouse-id-field" />
+                    <input type="hidden" name="Margin" id="make-margin-field" />
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                <button type="button" class="btn btn-primary" onclick="$('#make-form').submit();">Добавить</button>
             </div>
         </div>
-        <div class="form-group">
-            <label class="col-lg-4 control-label" for="make-name-field">Наименование</label>
-            <div class="col-lg-8">
-                <input class="form-control disabled" readonly="readonly" name="Name" type="text" id="make-name-field">
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-lg-4 control-label" for="make-brand-field">Бренд</label>
-            <div class="col-lg-8">
-                <input class="form-control disabled" readonly="readonly" name="Brand" type="text" id="make-brand-field">
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-lg-4 control-label" for="make-price-field">Цена</label>
-            <div class="col-lg-8">
-                <input class="form-control disabled" readonly="readonly" name="Price" type="text" id="make-price-field">
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-lg-4 control-label" for="make-quantity-field">Количество</label>
-            <div class="col-lg-8">
-                <input class="form-control" name="Quantity" type="text" id="make-quantity-field">
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-lg-4 control-label" for="make-price-field">Общая цена</label>
-            <div class="col-lg-8">
-                <input class="form-control disabled" readonly="readonly" type="text" id="make-total-price-field">
-            </div>
-        </div>
-        <input type="hidden" name="UniqueId" id="make-id-field"/>
-        <input type="hidden" name="TotalQuantity" id="make-total-quantity-field"/>
-        <input type="hidden" name="VendorPrice" id="make-vendor-price-field"/>
-        <input type="hidden" name="Warehouse" id="make-warehouse-field"/>
-        <input type="hidden" name="WarehouseId" id="make-warehouse-id-field"/>
-        <input type="hidden" name="Margin" id="make-margin-field"/>
-    </form>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
+        $("#make-quantity-field").spinner({
+            change: function() {
+                updatePrice();
+            }
+        });
         $("#search-form").validate({
-            query: {
-                required: true,
-                maxlength: 20
+            rules: {
+                query: {
+                    required: true,
+                    maxlength: 20
+                }
             },
             submitHandler: function (form) {
                 // Аяксовая загрузка результата
@@ -109,20 +132,45 @@
                 return false;
             }
         });
-        $("#make-form").validate({            
-            Quantity: {
-                required: true,
-                digits: true
+        $("#make-form").validate({
+            rules: {
+                
             },
-            submitHandler: function(form) {
+            submitHandler: function (form) {
                 // Отправляем используя ajax
-                $("#make-form").ajaxSubmit({                    
-                    dataType: 'json',
-                    success: function(data) {
-                        $("#make-position-dialog").dialog("close");
+                $("#make-form").ajaxSubmit({
+                    success: function (data) {
+                        $("#make-position-dialog").modal("hide");
+                        showSuccess("Позиция успешно добавлена");
+                        $("#current-order-content").html(data);
+                        $("#current-order-count").text($("#current-order-count-field").val());
                     }
                 });
             }
         });
+        $("#make-quantity-field").keydown(function(e) {
+            var key = e.charCode || e.keyCode || 0;
+            return (
+                key == 8 ||
+                key == 9 ||
+                key == 46 ||
+                key == 110 ||
+                key == 190 ||
+                (key >= 35 && key <= 40) ||
+                (key >= 48 && key <= 57) ||
+                (key >= 96 && key <= 105));
+        }).keyup(function(e) {
+            updatePrice();
+        }).change(function(e) {
+            updatePrice();
+        });
+        
+        function updatePrice() {
+            // Обновляем показания счетчика
+            var price = parseFloat($("#make-price-field").val().replace(",", "."));
+            var quantity = parseInt($("#make-quantity-field").val());
+            var totalPrice = price * quantity;
+            $("#make-total-price-field").val(accounting.formatMoney(totalPrice,"руб.",2, " ",",","%v %s"));
+        }
     });
 </script>

@@ -1,3 +1,10 @@
-﻿@model PartDesk.Domain.Entities.Order
-
-Данные по заказу
+﻿@using PartDesk.Domain.Entities
+@model PartDesk.Domain.Entities.Order
+@{
+    var items = Model.GetItems();
+}
+@foreach (var item in items)
+{
+    <li role="presentation"><a href="#" class=""><i class="icon16 i-wrench-3"></i>@item.Article (@item.Name) - @item.Quantity шт.</a></li>        
+}
+<input type="hidden" id="current-order-count-field" value="@Model.GetTotalCount()"/>

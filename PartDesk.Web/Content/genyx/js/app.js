@@ -68,3 +68,15 @@ $(document).ready(function() {
     $("[type='checkbox'], [type='radio'], [type='file'], select").not('.toggle, .select2, .multiselect').uniform();
 });
 
+function showSuccess(msg) {
+    $.jGrowl(msg, {
+        group: 'success',
+        position: 'center',
+        closeTemplate: '<i class="icon16 i-close-2"></i>',
+        animateOpen: {
+            width: 'show',
+            height: 'show'
+        }
+    });
+}
+

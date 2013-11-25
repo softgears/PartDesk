@@ -327,6 +327,7 @@
     <Content Include="Content\genyx\js\jquery-ui-timepicker-addon.js" />
     <Content Include="Content\genyx\js\jquery.genyxAdmin.js" />
     <Content Include="Content\genyx\js\jquery.mousewheel.js" />
+    <Content Include="Content\genyx\js\moneyutils.js" />
     <Content Include="Content\genyx\js\pages\calendar.js" />
     <Content Include="Content\genyx\js\pages\charts.js" />
     <Content Include="Content\genyx\js\pages\dashboard.js" />

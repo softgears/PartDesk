@@ -88,21 +88,9 @@
         $("#make-brand-field").val(brand);
         $("#make-margin-field").val(margin);
         $("#make-price-field").val(price);
-        $("#make-quantity-field").val(1);
-        var dialog = $("#make-position-dialog").dialog({            
-            modal: true,
-            title: 'Добавление позиции в заказ',
-            resizable: false,
-            dialogClass: 'dialog',
-            width: 450,
-            buttons: {
-                "Добавить": function() {
-                    $("#make-form").submit();
-                },
-                "Отмена": function() {
-                    dialog.dialog("close");
-                }
-            }
+        $("#make-quantity-field").val(1).keyup().change();
+        $("#make-position-dialog").modal({
+            keyboard: true
         });
         return false;
     });

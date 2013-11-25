@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using PartDesk.Domain.Entities;
+using PartDesk.Domain.Enums;
 using PartDesk.Domain.Interfaces.Repositories;
 using PartDesk.Domain.IoC;
 using PartDesk.Domain.Routing;
@@ -40,6 +41,22 @@ namespace PartDesk.Web.Controllers
             var order = CurrentUser.GetOrCreateCurrentOrder();
 
             // Добавляем позицию в заказ
+            var idParts = position.UniqueId.Split('-');
+            switch (idParts[0])
+            {
+                case "AT":
+                    position.Vendor = (short) PartVendor.Autotrade;
+                    break;
+                case "BERG":
+                    position.Vendor = (short) PartVendor.BERG;
+                    break;
+                case "MX":
+                    position.Vendor = (short) PartVendor.MXGroup;
+                    break;
+                case "GKA":
+                    position.Vendor = (short) PartVendor.GKAutomechanics;
+                    break;
+            }
             position.DateCreated = DateTime.Now;
             order.OrderItems.Add(position);
             Locator.GetService<IOrdersRepository>().SubmitChanges();

@@ -95,6 +95,7 @@
 
     <!-- Misc plugins -->
     <script src="~/Content/genyx/js/plugins/misc/fullcalendar/fullcalendar.min.js"></script>
+    <script src="~/Content/genyx/js/moneyutils.js"></script>
 
     <!-- UI plugins -->
     <script src="~/Content/genyx/js/plugins/ui/jgrowl/jquery.jgrowl.min.js"></script>
@@ -138,9 +139,9 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="icon24 i-cart-2"></i>
-                            <span class="notification red">@order.GetTotalCount()</span>
+                            <span class="notification red" id="current-order-count">@order.GetTotalCount()</span>
                         </a>
-                        <ul class="dropdown-menu" role="menu">
+                        <ul class="dropdown-menu" role="menu" id="current-order-content">
                             @if (items.Count == 0)
                             {
                                 <li role="presentation">
@@ -153,7 +154,7 @@
                             {
                                 foreach (var item in items)
                                 {
-                                    <li role="presentation"><a href="#" class=""><i class="icon16 i-wrench-3"></i>@item.Article (@item.Name) <span class="notification red">@item.Quantity</span></a></li>        
+                                    <li role="presentation"><a href="#" class=""><i class="icon16 i-wrench-3"></i>@item.Article (@item.Name) - @item.Quantity шт.</a></li>        
                                 }
                             }
                         </ul>
