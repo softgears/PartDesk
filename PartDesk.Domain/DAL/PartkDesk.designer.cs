@@ -34,9 +34,6 @@ namespace PartDesk.Domain.DAL
     partial void InsertMailNotificationMessage(PartDesk.Domain.Entities.MailNotificationMessage instance);
     partial void UpdateMailNotificationMessage(PartDesk.Domain.Entities.MailNotificationMessage instance);
     partial void DeleteMailNotificationMessage(PartDesk.Domain.Entities.MailNotificationMessage instance);
-    partial void InsertOrderStatusChangement(PartDesk.Domain.Entities.OrderStatusChangement instance);
-    partial void UpdateOrderStatusChangement(PartDesk.Domain.Entities.OrderStatusChangement instance);
-    partial void DeleteOrderStatusChangement(PartDesk.Domain.Entities.OrderStatusChangement instance);
     partial void InsertPermission(PartDesk.Domain.Entities.Permission instance);
     partial void UpdatePermission(PartDesk.Domain.Entities.Permission instance);
     partial void DeletePermission(PartDesk.Domain.Entities.Permission instance);
@@ -64,6 +61,9 @@ namespace PartDesk.Domain.DAL
     partial void InsertOrderItem(PartDesk.Domain.Entities.OrderItem instance);
     partial void UpdateOrderItem(PartDesk.Domain.Entities.OrderItem instance);
     partial void DeleteOrderItem(PartDesk.Domain.Entities.OrderItem instance);
+    partial void InsertOrderStatusChangement(PartDesk.Domain.Entities.OrderStatusChangement instance);
+    partial void UpdateOrderStatusChangement(PartDesk.Domain.Entities.OrderStatusChangement instance);
+    partial void DeleteOrderStatusChangement(PartDesk.Domain.Entities.OrderStatusChangement instance);
     #endregion
 		
 		public PartDeskDataContext(string connection) : 
@@ -103,14 +103,6 @@ namespace PartDesk.Domain.DAL
 			get
 			{
 				return this.GetTable<PartDesk.Domain.Entities.MailNotificationMessage>();
-			}
-		}
-		
-		public System.Data.Linq.Table<PartDesk.Domain.Entities.OrderStatusChangement> OrderStatusChangements
-		{
-			get
-			{
-				return this.GetTable<PartDesk.Domain.Entities.OrderStatusChangement>();
 			}
 		}
 		
@@ -185,6 +177,14 @@ namespace PartDesk.Domain.DAL
 				return this.GetTable<PartDesk.Domain.Entities.OrderItem>();
 			}
 		}
+		
+		public System.Data.Linq.Table<PartDesk.Domain.Entities.OrderStatusChangement> OrderStatusChangements
+		{
+			get
+			{
+				return this.GetTable<PartDesk.Domain.Entities.OrderStatusChangement>();
+			}
+		}
 	}
 }
 namespace PartDesk.Domain.Entities
@@ -229,6 +229,8 @@ namespace PartDesk.Domain.Entities
 		
 		private EntitySet<Order> _ManagedOrders;
 		
+		private EntitySet<OrderStatusChangement> _OrderStatusChangements;
+		
 		private EntityRef<Role> _Role;
 		
 		private EntityRef<Company> _Company;
@@ -267,6 +269,7 @@ namespace PartDesk.Domain.Entities
 		{
 			this._CreatedOrders = new EntitySet<Order>(new Action<Order>(this.attach_CreatedOrders), new Action<Order>(this.detach_CreatedOrders));
 			this._ManagedOrders = new EntitySet<Order>(new Action<Order>(this.attach_ManagedOrders), new Action<Order>(this.detach_ManagedOrders));
+			this._OrderStatusChangements = new EntitySet<OrderStatusChangement>(new Action<OrderStatusChangement>(this.attach_OrderStatusChangements), new Action<OrderStatusChangement>(this.detach_OrderStatusChangements));
 			this._Role = default(EntityRef<Role>);
 			this._Company = default(EntityRef<Company>);
 			OnCreated();
@@ -546,6 +549,19 @@ namespace PartDesk.Domain.Entities
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_OrderStatusChangement", Storage="_OrderStatusChangements", ThisKey="Id", OtherKey="OrderId")]
+		public EntitySet<OrderStatusChangement> OrderStatusChangements
+		{
+			get
+			{
+				return this._OrderStatusChangements;
+			}
+			set
+			{
+				this._OrderStatusChangements.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Role_User", Storage="_Role", ThisKey="RoleId", OtherKey="Id", IsForeignKey=true)]
 		public Role Role
 		{
@@ -656,6 +672,18 @@ namespace PartDesk.Domain.Entities
 		{
 			this.SendPropertyChanging();
 			entity.Manager = null;
+		}
+		
+		private void attach_OrderStatusChangements(OrderStatusChangement entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = this;
+		}
+		
+		private void detach_OrderStatusChangements(OrderStatusChangement entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = null;
 		}
 	}
 	
@@ -840,229 +868,6 @@ namespace PartDesk.Domain.Entities
 					this._DateSended = value;
 					this.SendPropertyChanged("DateSended");
 					this.OnDateSendedChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.OrderStatusChangements")]
-	public partial class OrderStatusChangement : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private long _Id;
-		
-		private long _OrderId;
-		
-		private short _Status;
-		
-		private long _AuthorId;
-		
-		private string _Comments;
-		
-		private System.Nullable<System.DateTime> _DateCreated;
-		
-		private EntityRef<Order> _Order;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdChanging(long value);
-    partial void OnIdChanged();
-    partial void OnOrderIdChanging(long value);
-    partial void OnOrderIdChanged();
-    partial void OnStatusChanging(short value);
-    partial void OnStatusChanged();
-    partial void OnAuthorIdChanging(long value);
-    partial void OnAuthorIdChanged();
-    partial void OnCommentsChanging(string value);
-    partial void OnCommentsChanged();
-    partial void OnDateCreatedChanging(System.Nullable<System.DateTime> value);
-    partial void OnDateCreatedChanged();
-    #endregion
-		
-		public OrderStatusChangement()
-		{
-			this._Order = default(EntityRef<Order>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public long Id
-		{
-			get
-			{
-				return this._Id;
-			}
-			set
-			{
-				if ((this._Id != value))
-				{
-					this.OnIdChanging(value);
-					this.SendPropertyChanging();
-					this._Id = value;
-					this.SendPropertyChanged("Id");
-					this.OnIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrderId", DbType="BigInt NOT NULL")]
-		public long OrderId
-		{
-			get
-			{
-				return this._OrderId;
-			}
-			set
-			{
-				if ((this._OrderId != value))
-				{
-					if (this._Order.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnOrderIdChanging(value);
-					this.SendPropertyChanging();
-					this._OrderId = value;
-					this.SendPropertyChanged("OrderId");
-					this.OnOrderIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="SmallInt NOT NULL")]
-		public short Status
-		{
-			get
-			{
-				return this._Status;
-			}
-			set
-			{
-				if ((this._Status != value))
-				{
-					this.OnStatusChanging(value);
-					this.SendPropertyChanging();
-					this._Status = value;
-					this.SendPropertyChanged("Status");
-					this.OnStatusChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AuthorId", DbType="BigInt NOT NULL")]
-		public long AuthorId
-		{
-			get
-			{
-				return this._AuthorId;
-			}
-			set
-			{
-				if ((this._AuthorId != value))
-				{
-					this.OnAuthorIdChanging(value);
-					this.SendPropertyChanging();
-					this._AuthorId = value;
-					this.SendPropertyChanged("AuthorId");
-					this.OnAuthorIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Comments", DbType="NVarChar(MAX)")]
-		public string Comments
-		{
-			get
-			{
-				return this._Comments;
-			}
-			set
-			{
-				if ((this._Comments != value))
-				{
-					this.OnCommentsChanging(value);
-					this.SendPropertyChanging();
-					this._Comments = value;
-					this.SendPropertyChanged("Comments");
-					this.OnCommentsChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreated", DbType="DateTime")]
-		public System.Nullable<System.DateTime> DateCreated
-		{
-			get
-			{
-				return this._DateCreated;
-			}
-			set
-			{
-				if ((this._DateCreated != value))
-				{
-					this.OnDateCreatedChanging(value);
-					this.SendPropertyChanging();
-					this._DateCreated = value;
-					this.SendPropertyChanged("DateCreated");
-					this.OnDateCreatedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Order_OrderStatusChangement", Storage="_Order", ThisKey="OrderId", OtherKey="Id", IsForeignKey=true, DeleteOnNull=true, DeleteRule="CASCADE")]
-		public Order Order
-		{
-			get
-			{
-				return this._Order.Entity;
-			}
-			set
-			{
-				Order previousValue = this._Order.Entity;
-				if (((previousValue != value) 
-							|| (this._Order.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Order.Entity = null;
-						previousValue.OrderStatusChangements.Remove(this);
-					}
-					this._Order.Entity = value;
-					if ((value != null))
-					{
-						value.OrderStatusChangements.Add(this);
-						this._OrderId = value.Id;
-					}
-					else
-					{
-						this._OrderId = default(long);
-					}
-					this.SendPropertyChanged("Order");
 				}
 			}
 		}
@@ -1886,9 +1691,9 @@ namespace PartDesk.Domain.Entities
 		
 		private System.Nullable<System.DateTime> _DateCreated;
 		
-		private EntitySet<OrderStatusChangement> _OrderStatusChangements;
-		
 		private EntitySet<OrderItem> _OrderItems;
+		
+		private EntitySet<OrderStatusChangement> _OrderStatusChangements;
 		
 		private EntityRef<User> _Author;
 		
@@ -1924,8 +1729,8 @@ namespace PartDesk.Domain.Entities
 		
 		public Order()
 		{
-			this._OrderStatusChangements = new EntitySet<OrderStatusChangement>(new Action<OrderStatusChangement>(this.attach_OrderStatusChangements), new Action<OrderStatusChangement>(this.detach_OrderStatusChangements));
 			this._OrderItems = new EntitySet<OrderItem>(new Action<OrderItem>(this.attach_OrderItems), new Action<OrderItem>(this.detach_OrderItems));
+			this._OrderStatusChangements = new EntitySet<OrderStatusChangement>(new Action<OrderStatusChangement>(this.attach_OrderStatusChangements), new Action<OrderStatusChangement>(this.detach_OrderStatusChangements));
 			this._Author = default(EntityRef<User>);
 			this._Manager = default(EntityRef<User>);
 			this._Client = default(EntityRef<Client>);
@@ -2129,19 +1934,6 @@ namespace PartDesk.Domain.Entities
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Order_OrderStatusChangement", Storage="_OrderStatusChangements", ThisKey="Id", OtherKey="OrderId")]
-		public EntitySet<OrderStatusChangement> OrderStatusChangements
-		{
-			get
-			{
-				return this._OrderStatusChangements;
-			}
-			set
-			{
-				this._OrderStatusChangements.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Order_OrderItem", Storage="_OrderItems", ThisKey="Id", OtherKey="OrderId")]
 		public EntitySet<OrderItem> OrderItems
 		{
@@ -2152,6 +1944,19 @@ namespace PartDesk.Domain.Entities
 			set
 			{
 				this._OrderItems.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Order_OrderStatusChangement", Storage="_OrderStatusChangements", ThisKey="Id", OtherKey="OrderId")]
+		public EntitySet<OrderStatusChangement> OrderStatusChangements
+		{
+			get
+			{
+				return this._OrderStatusChangements;
+			}
+			set
+			{
+				this._OrderStatusChangements.Assign(value);
 			}
 		}
 		
@@ -2311,18 +2116,6 @@ namespace PartDesk.Domain.Entities
 			}
 		}
 		
-		private void attach_OrderStatusChangements(OrderStatusChangement entity)
-		{
-			this.SendPropertyChanging();
-			entity.Order = this;
-		}
-		
-		private void detach_OrderStatusChangements(OrderStatusChangement entity)
-		{
-			this.SendPropertyChanging();
-			entity.Order = null;
-		}
-		
 		private void attach_OrderItems(OrderItem entity)
 		{
 			this.SendPropertyChanging();
@@ -2330,6 +2123,18 @@ namespace PartDesk.Domain.Entities
 		}
 		
 		private void detach_OrderItems(OrderItem entity)
+		{
+			this.SendPropertyChanging();
+			entity.Order = null;
+		}
+		
+		private void attach_OrderStatusChangements(OrderStatusChangement entity)
+		{
+			this.SendPropertyChanging();
+			entity.Order = this;
+		}
+		
+		private void detach_OrderStatusChangements(OrderStatusChangement entity)
 		{
 			this.SendPropertyChanging();
 			entity.Order = null;
@@ -4217,6 +4022,266 @@ namespace PartDesk.Domain.Entities
 						this._OrderId = default(long);
 					}
 					this.SendPropertyChanged("Order");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.OrderStatusChangements")]
+	public partial class OrderStatusChangement : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _Id;
+		
+		private long _OrderId;
+		
+		private short _Status;
+		
+		private long _AuthorId;
+		
+		private string _Comments;
+		
+		private System.Nullable<System.DateTime> _DateCreated;
+		
+		private EntityRef<Order> _Order;
+		
+		private EntityRef<User> _User;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(long value);
+    partial void OnIdChanged();
+    partial void OnOrderIdChanging(long value);
+    partial void OnOrderIdChanged();
+    partial void OnStatusChanging(short value);
+    partial void OnStatusChanged();
+    partial void OnAuthorIdChanging(long value);
+    partial void OnAuthorIdChanged();
+    partial void OnCommentsChanging(string value);
+    partial void OnCommentsChanged();
+    partial void OnDateCreatedChanging(System.Nullable<System.DateTime> value);
+    partial void OnDateCreatedChanged();
+    #endregion
+		
+		public OrderStatusChangement()
+		{
+			this._Order = default(EntityRef<Order>);
+			this._User = default(EntityRef<User>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public long Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrderId", DbType="BigInt NOT NULL")]
+		public long OrderId
+		{
+			get
+			{
+				return this._OrderId;
+			}
+			set
+			{
+				if ((this._OrderId != value))
+				{
+					if ((this._Order.HasLoadedOrAssignedValue || this._User.HasLoadedOrAssignedValue))
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnOrderIdChanging(value);
+					this.SendPropertyChanging();
+					this._OrderId = value;
+					this.SendPropertyChanged("OrderId");
+					this.OnOrderIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="SmallInt NOT NULL")]
+		public short Status
+		{
+			get
+			{
+				return this._Status;
+			}
+			set
+			{
+				if ((this._Status != value))
+				{
+					this.OnStatusChanging(value);
+					this.SendPropertyChanging();
+					this._Status = value;
+					this.SendPropertyChanged("Status");
+					this.OnStatusChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AuthorId", DbType="BigInt NOT NULL")]
+		public long AuthorId
+		{
+			get
+			{
+				return this._AuthorId;
+			}
+			set
+			{
+				if ((this._AuthorId != value))
+				{
+					this.OnAuthorIdChanging(value);
+					this.SendPropertyChanging();
+					this._AuthorId = value;
+					this.SendPropertyChanged("AuthorId");
+					this.OnAuthorIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Comments", DbType="NVarChar(MAX)")]
+		public string Comments
+		{
+			get
+			{
+				return this._Comments;
+			}
+			set
+			{
+				if ((this._Comments != value))
+				{
+					this.OnCommentsChanging(value);
+					this.SendPropertyChanging();
+					this._Comments = value;
+					this.SendPropertyChanged("Comments");
+					this.OnCommentsChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreated", DbType="DateTime")]
+		public System.Nullable<System.DateTime> DateCreated
+		{
+			get
+			{
+				return this._DateCreated;
+			}
+			set
+			{
+				if ((this._DateCreated != value))
+				{
+					this.OnDateCreatedChanging(value);
+					this.SendPropertyChanging();
+					this._DateCreated = value;
+					this.SendPropertyChanged("DateCreated");
+					this.OnDateCreatedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Order_OrderStatusChangement", Storage="_Order", ThisKey="OrderId", OtherKey="Id", IsForeignKey=true, DeleteOnNull=true, DeleteRule="CASCADE")]
+		public Order Order
+		{
+			get
+			{
+				return this._Order.Entity;
+			}
+			set
+			{
+				Order previousValue = this._Order.Entity;
+				if (((previousValue != value) 
+							|| (this._Order.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Order.Entity = null;
+						previousValue.OrderStatusChangements.Remove(this);
+					}
+					this._Order.Entity = value;
+					if ((value != null))
+					{
+						value.OrderStatusChangements.Add(this);
+						this._OrderId = value.Id;
+					}
+					else
+					{
+						this._OrderId = default(long);
+					}
+					this.SendPropertyChanged("Order");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_OrderStatusChangement", Storage="_User", ThisKey="OrderId", OtherKey="Id", IsForeignKey=true, DeleteOnNull=true, DeleteRule="CASCADE")]
+		public User User
+		{
+			get
+			{
+				return this._User.Entity;
+			}
+			set
+			{
+				User previousValue = this._User.Entity;
+				if (((previousValue != value) 
+							|| (this._User.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._User.Entity = null;
+						previousValue.OrderStatusChangements.Remove(this);
+					}
+					this._User.Entity = value;
+					if ((value != null))
+					{
+						value.OrderStatusChangements.Add(this);
+						this._OrderId = value.Id;
+					}
+					else
+					{
+						this._OrderId = default(long);
+					}
+					this.SendPropertyChanged("User");
 				}
 			}
 		}

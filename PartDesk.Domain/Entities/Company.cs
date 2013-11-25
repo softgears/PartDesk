@@ -56,5 +56,14 @@ namespace PartDesk.Domain.Entities
         {
             return Orders.Where(o => o.Status > 0).OrderByDescending(o => o.LastUpdate).ToList();
         }
+
+        /// <summary>
+        /// Клиенты компании
+        /// </summary>
+        /// <returns></returns>
+        public IList<Client> GetClients()
+        {
+            return Clients.ToList();
+        }
     }
 }

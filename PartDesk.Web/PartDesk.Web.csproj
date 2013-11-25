@@ -145,6 +145,8 @@
     <Compile Include="Models\Dashboard\DashboardModel.cs" />
     <Compile Include="Models\Manage\GenericListModel.cs" />
     <Compile Include="Models\Manage\ManageUsersListModel.cs" />
+    <Compile Include="Models\Orders\OrderConfirmationModel.cs" />
+    <Compile Include="Models\Orders\OrdersListModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1248,6 +1250,18 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Orders\AddPosition.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Orders\Confirm.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Orders\DoConfirm.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Orders\OrdersList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Orders\Info.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

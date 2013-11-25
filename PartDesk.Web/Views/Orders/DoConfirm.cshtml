@@ -1,0 +1,22 @@
+﻿@model PartDesk.Domain.Entities.Order
+
+@{
+    ViewBag.Title = "Заказ успешно подтвержден";
+    Layout = "../Shared/AccountLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="icon"><i class="icon20 i-info"></i></div>
+                <h4>Заказ подтвержден</h4>
+                <a href="#" class="minimize"></a>
+            </div>
+            <!-- End .panel-heading -->
+            <div class="panel-body">
+                <p>Уважаемый пользователь. Ваш заказ был успешно создан. Его номер <b>@Model.Id</b>. На Ваш Заказ назначен менеджер <b>@Model.Manager.GetFioSmall() - @Model.Manager.Phone</b>. В ближайшее время он свяжется с Вами, чтобы уточнить все детали заказа.</p>
+            </div>
+        </div>
+    </div>
+</div>

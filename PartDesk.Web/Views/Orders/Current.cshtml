@@ -18,6 +18,7 @@
             <div class="panel-body">
                 <p>
                     <a href="/search" class="btn btn-info tip" title="Добавить новую позицию в заказ">Добавить позицию</a>    
+                    <a href="/orders/confirm" class="btn btn-success tip" title="Завершить оформление заказа и подтвердить его">Оформить заказ</a>    
                 </p>
                 <table class="table table-striped table-bordered table-hover" id="order-table">
                     <thead>
@@ -70,16 +71,21 @@
                                         @String.Format("{0:c}",item.Price)
                                     </td>
                                     <td style="width: 100px">
-                                        <input type="text" class="form-control" value="@item.Quantity" style="width: 90px" placeholder="Введите количество"/>
+                                        <input type="text" class="form-control quant-holder" value="@item.Quantity" style="width: 90px" placeholder="Введите количество"/>
                                     </td>
-                                    <td>
-                                        @String.Format("{0:c}",item.Price*item.Quantity)
+                                    <td class="price-holder">
+                                        
                                     </td>
                                     <td style="width: 45px">
                                         <a href="/orders/position/@item.Id/delete" class="btn btn-xs btn-danger tip" onclick="return confirm('Вы действительно хотите удалить эту позицию?')" title="Удалить позицию из заказа"><i class="icon12 i-remove"></i></a>    
                                     </td>
                                 </tr>
                             }
+                            <tr>
+                                <td colspan="7" class="center well">
+                                    Общая сумма заказа <span id="total-price"></span>
+                                </td>
+                            </tr>
                         }
                     </tbody>
                 </table>
@@ -87,3 +93,38 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function(e) {
+        function recalc() {
+            var total = 0.0;
+            $(".quant-holder").each(function (index, item) {
+                var tr = $(item).parent().parent();
+                var quantity = parseInt($(item).val());
+                if (isNaN(quantity)) {
+                    $(item).val(1);
+                    quantity = 1;
+                }
+                var price = parseFloat($(tr).data("price").replace(",", "."));
+                var positionPrice = quantity * price;
+                total += positionPrice;
+                $(tr).find(".price-holder").text(accounting.formatMoney(positionPrice, "р.", 2, " ", ",", "%v %s"));
+            });
+            $("#total-price").text(accounting.formatMoney(total, "р.", 2, " ", ",", "%v %s"));
+        }
+        recalc();
+
+        $(".quant-holder").change(function() {
+            var tr = $(this).parent().parent();
+            var id = $(tr).data("id");
+            var quantity = parseInt($(this).val());
+            if (isNaN(quantity)) {
+                $(this).val(1);
+                quantity = 1;
+            }
+            recalc();
+            $.post("/orders/change-quantity", { id: id, quantity: quantity }, function(success) {
+                showSuccess("Количество было успешно изменено");
+            },"json");
+        });
+    });
+</script>

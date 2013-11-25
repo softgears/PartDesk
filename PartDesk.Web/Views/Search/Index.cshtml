@@ -170,7 +170,7 @@
             var price = parseFloat($("#make-price-field").val().replace(",", "."));
             var quantity = parseInt($("#make-quantity-field").val());
             var totalPrice = price * quantity;
-            $("#make-total-price-field").val(accounting.formatMoney(totalPrice,"руб.",2, " ",",","%v %s"));
+            $("#make-total-price-field").val(accounting.formatMoney(totalPrice,"р.",2, " ",",","%v %s"));
         }
     });
 </script>

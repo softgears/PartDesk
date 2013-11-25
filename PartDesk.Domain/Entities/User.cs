@@ -116,7 +116,7 @@ namespace PartDesk.Domain.Entities
         /// <returns></returns>
         public IList<Order> GetOrders()
         {
-            return CreatedOrders.OrderByDescending(d => d.LastUpdate).ToList();
+            return CreatedOrders.Where(o => o.Status > 0).OrderByDescending(d => d.LastUpdate).ToList();
         }
 
         /// <summary>

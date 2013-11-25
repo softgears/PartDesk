@@ -15,6 +15,7 @@
       <Column Name="DateModified" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Association Name="User_Order" Member="CreatedOrders" ThisKey="Id" OtherKey="AuthorId" Type="Order" />
       <Association Name="User_Order1" Member="ManagedOrders" ThisKey="Id" OtherKey="ManagerId" Type="Order" />
+      <Association Name="User_OrderStatusChangement" Member="OrderStatusChangements" ThisKey="Id" OtherKey="OrderId" Type="OrderStatusChangement" />
       <Association Name="Role_User" Member="Role" ThisKey="RoleId" OtherKey="Id" Type="Role" IsForeignKey="true" />
       <Association Name="Company_User" Member="Company" ThisKey="CompanyId" OtherKey="Id" Type="Company" IsForeignKey="true" />
     </Type>
@@ -28,17 +29,6 @@
       <Column Name="Sended" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="DateEnqued" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="DateSended" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.OrderStatusChangements" Member="OrderStatusChangements">
-    <Type Name="OrderStatusChangement">
-      <Column Name="Id" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="OrderId" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Column Name="Status" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
-      <Column Name="AuthorId" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Column Name="Comments" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="DateCreated" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Association Name="Order_OrderStatusChangement" Member="Order" ThisKey="OrderId" OtherKey="Id" Type="Order" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
     </Type>
   </Table>
   <Table Name="dbo.Permissions" Member="Permissions">
@@ -92,8 +82,8 @@
       <Column Name="Description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="DeliveryAddress" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="DateCreated" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Association Name="Order_OrderStatusChangement" Member="OrderStatusChangements" ThisKey="Id" OtherKey="OrderId" Type="OrderStatusChangement" />
       <Association Name="Order_OrderItem" Member="OrderItems" ThisKey="Id" OtherKey="OrderId" Type="OrderItem" />
+      <Association Name="Order_OrderStatusChangement" Member="OrderStatusChangements" ThisKey="Id" OtherKey="OrderId" Type="OrderStatusChangement" />
       <Association Name="User_Order" Member="Author" ThisKey="AuthorId" OtherKey="Id" Type="User" IsForeignKey="true" />
       <Association Name="User_Order1" Member="Manager" ThisKey="ManagerId" OtherKey="Id" Type="User" IsForeignKey="true" />
       <Association Name="Client_Order" Member="Client" ThisKey="ClientId" OtherKey="Id" Type="Client" IsForeignKey="true" />
@@ -185,6 +175,18 @@
       <Column Name="DateCreated" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="DateModified" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Association Name="Order_OrderItem" Member="Order" ThisKey="OrderId" OtherKey="Id" Type="Order" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.OrderStatusChangements" Member="OrderStatusChangements">
+    <Type Name="OrderStatusChangement">
+      <Column Name="Id" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="OrderId" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="Status" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="AuthorId" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="Comments" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="DateCreated" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Order_OrderStatusChangement" Member="Order" ThisKey="OrderId" OtherKey="Id" Type="Order" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="User_OrderStatusChangement" Member="User" ThisKey="OrderId" OtherKey="Id" Type="User" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
     </Type>
   </Table>
 </Database>

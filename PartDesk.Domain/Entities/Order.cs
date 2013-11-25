@@ -66,7 +66,7 @@ namespace PartDesk.Domain.Entities
         /// <returns></returns>
         public string GetTotalPrice()
         {
-            return String.Format("{0:c}", OrderItems.Sum(oi => oi.Margin * oi.Quantity));
+            return String.Format("{0:c}", OrderItems.Sum(oi => oi.Price * oi.Quantity));
         }
 
         /// <summary>
@@ -76,6 +76,15 @@ namespace PartDesk.Domain.Entities
         public IList<OrderItem> GetItems()
         {
             return OrderItems.ToList();
+        }
+
+        /// <summary>
+        /// Изменения статуса заказа
+        /// </summary>
+        /// <returns></returns>
+        public IList<OrderStatusChangement> GetChanges()
+        {
+            return OrderStatusChangements.OrderBy(s => s.DateCreated).ToList();
         }
     }
 }
