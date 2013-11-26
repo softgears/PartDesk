@@ -86,5 +86,14 @@ namespace PartDesk.Domain.Entities
         {
             return OrderStatusChangements.OrderBy(s => s.DateCreated).ToList();
         }
+
+        /// <summary>
+        /// Возвращает общую накрутку и заработок на этом заказе
+        /// </summary>
+        /// <returns></returns>
+        public string GetTotalMargin()
+        {
+            return String.Format("{0:c}", OrderItems.Sum(oi => oi.Margin*oi.Quantity));
+        }
     }
 }

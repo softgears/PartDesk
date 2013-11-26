@@ -1,0 +1,391 @@
+﻿@using PartDesk.Domain.Entities
+@using PartDesk.Domain.Enums
+@using PartDesk.Domain.Interfaces.Repositories
+@using PartDesk.Domain.IoC
+@using PartDesk.Web.Classes.Ext
+@model PartDesk.Domain.Entities.Order
+
+@{
+    ViewBag.Title = "Информация о заказе " + Model.Id;
+    Layout = "../Shared/AccountLayout.cshtml";
+    var items = Model.GetItems();
+    var usersRep = Locator.GetService<IUsersRepository>();
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="icon"><i class="icon20 i-car"></i></div>
+                <h4>Информация о заказе</h4>
+                <a href="#" class="minimize"></a>
+            </div>
+            <!-- End .panel-heading -->
+            <div class="panel-body">
+                <form action="#" class="form-horizontal" id="order-form" method="POST">
+
+                    <div class="page-header">
+                        <h4>Информация о клиенте</h4>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label" for="client-lname-field">Фамилия</label>
+                        <div class="col-lg-10">
+                            <input class="form-control disabled" readonly="readonly" name="LastName" type="text" id="client-lname-field" value="@Model.Client.LastName">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label" for="client-fname-field">Имя</label>
+                        <div class="col-lg-10">
+                            <input class="form-control disabled" readonly="readonly" name="FirstName" type="text" id="client-fname-field" value="@Model.Client.FirstName">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label" for="client-sname-field">Отчество</label>
+                        <div class="col-lg-10">
+                            <input class="form-control disabled" readonly="readonly" name="SurName" type="text" id="client-sname-field" value="@Model.Client.LastName">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label" for="client-phone-field">Телефон</label>
+                        <div class="col-lg-10">
+                            <input class="form-control disabled" readonly="readonly" name="Phone" type="text" id="client-phone-field" value="@Model.Client.Phone">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label" for="client-email-field">Email</label>
+                        <div class="col-lg-10">
+                            <input class="form-control disabled" readonly="readonly" name="Email" type="text" id="client-email-field" value="@Model.Client.Email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label" for="client-address-field">Адрес</label>
+                        <div class="col-lg-10">
+                            <textarea class="form-control disabled" readonly="readonly" name="Address" id="client-address-field">@Model.Client.Address</textarea>
+                        </div>
+                    </div>
+                    <div class="page-header">
+                        <h4>Информация о заказе</h4>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label" for="order-manager-field">Назначенный менеджер</label>
+                        <div class="col-lg-10">
+                            <p class="well">
+                                @Model.Manager.GetFio()
+                            </p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label" for="order-dc-field">Дата создания</label>
+                        <div class="col-lg-10">
+                            <p class="well">
+                                @Model.DateCreated.FormatDateTime()
+                            </p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label" for="order-address-field">Адрес доставки</label>
+                        <div class="col-lg-10">
+                            <textarea class="form-control disabled" readonly="readonly" name="DeliveryAddress" id="order-address-field">@Model.DeliveryAddress</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label" for="order-desc-field">Комментарии к заказу</label>
+                        <div class="col-lg-10">
+                            <textarea class="form-control disabled" readonly="readonly" name="Description" id="order-desc-field">@Model.Description</textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="icon"><i class="icon20 i-table"></i></div>
+                <h4>Состав заказа</h4>
+                <a href="#" class="minimize"></a>
+            </div>
+            <!-- End .panel-heading -->
+            <div class="panel-body">
+                <table class="table table-striped table-bordered table-hover" id="order-table">
+                    <thead>
+                        <tr>
+                            <th>ИД
+                            </th>
+                            <th>Поставщик
+                            </th>
+                            <th>Артикул
+                            </th>
+                            <th>Наименование
+                            </th>
+                            <th>Бренд
+                            </th>
+                            <th>Цена поставщика
+                            </th>
+                            <th>Маржа
+                            </th>
+                            <th>Общая цена
+                            </th>
+                            <th>Количество
+                            </th>
+                            <th>Стоимость
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (items.Count == 0)
+                        {
+                            <tr>
+                                <td colspan="11">Нет позиций в заказе</td>
+                            </tr>
+                        }
+                        else
+                        {
+                            foreach (var item in items)
+                            {
+                            <tr data-id="@item.Id">
+                                <td>
+                                    @item.UniqueId
+                                </td>
+                                <td>
+                                    @(((PartVendor)item.Vendor).GetEnumMemberName())
+                                </td>
+                                <td>
+                                    @item.Article
+                                </td>
+                                <td>
+                                    @item.Name
+                                </td>
+                                <td>
+                                    @item.Brand
+                                </td>
+                                <td style="width: 100px">
+                                    <input type="text" class="price-holder form-control" style="width: 90px" value="@((item.VendorPrice ?? item.Price).ToString("0.00"))"/>
+                                </td>
+                                <td style="width: 100px">
+                                    <input type="text" class="margin-holder form-control" style="width: 90px" value="@item.Margin.ToString("0.00")" />
+                                </td>
+                                <td class="price"></td>
+                                <td style="width: 100px">
+                                    <input type="text" class="quant-holder form-control" style="width: 90px" value="@item.Quantity"/>
+                                </td>
+                                <td class="total-price"></td>
+                                <td style="width: 45px">
+                                    <a href="/manage/orders/position/@item.Id/delete?orderId=@Model.Id" class="btn btn-xs btn-danger tip" onclick="return confirm('Вы действительно хотите удалить эту позицию?')" title="Удалить позицию из заказа"><i class="icon12 i-remove"></i></a>
+                                </td>
+                            </tr>
+                            }
+                            <tr>
+                                <td colspan="11" class="center well">Общая сумма заказа <span id="total-price"></span>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="icon"><i class="icon20 i-man"></i></div>
+                <h4>Управление</h4>
+                <a href="#" class="minimize"></a>
+            </div>
+            <div class="panel-body ">
+                <a href="#" class="btn btn-success tip change-status" title="Изменить статус заказа"><i class="icon12 i-enter-3"></i>Изменить статус</a>
+                <a href="#" class="btn btn-warning tip change-manager" title="Изменить менеджера"><i class="icon12 i-user-cancel"></i>Поменять менеджера</a>
+                <div class="btn-group">
+                    <button class="btn btn-info dropdown-toggle" data-toggle="dropdown">Распечатать счет <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">PDF</a></li>
+                        <li><a href="#">Excel</a></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="icon"><i class="icon20 i-history"></i></div>
+                <h4>История заказа</h4>
+                <a href="#" class="minimize"></a>
+            </div>
+
+            <a name="history"></a>
+            <div class="panel-body ">
+
+                <div class="chat-layout">
+                    <ul>
+                        @foreach (var change in Model.GetChanges())
+                        {
+                            <li class="clearfix leftside">
+                                <div class="user center">
+                                    <div class="avatar center">
+                                        <img src="@change.User.GetAvatar()" alt="@change.User.GetFio()" style="width: 60px; height: 60px">
+                                    </div>
+                                    <span class="ago">@change.DateCreated.FormatDateTime()</span>
+                                </div>
+                                <div class="message" style="margin-left: 150px">
+                                    <p class="well-sm info">
+                                        Статус изменен на <b>@(((OrderStatus)change.Status).GetEnumMemberName())</b>
+                                    </p>
+                                    @change.Comments
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="change-status-dialog" tabindex="-1" role="dialog" aria-labelledby="changeStatusLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Изменение статуса заказа</h4>
+            </div>
+            <div class="modal-body">
+                <form id="change-status-form" method="POST" class="form-horizontal" role="form" action="/manage/orders/change-status">
+                    <input type="hidden" id="change-status-order-id-field" name="id" value="=@Model.Id"/>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label" for="change-order-status-field">Новый статус</label>
+                        <div class="col-lg-9">
+                            <select name="status" class="form-control" id="change-order-status-field">
+                                @foreach (OrderStatus status in Enum.GetValues(typeof(OrderStatus)))
+                                {
+                                    if (status != OrderStatus.Initial)
+                                    {
+                                        var s = (short)status;
+                                    <option value="@s">@status.GetEnumMemberName()</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label" for="change-order-status-comments-field">Комментарии</label>
+                        <div class="col-lg-9">
+                            <textarea name="comments" id="change-order-status-comments-field" class="form-control" placeholder="Введите комментарии к заказу"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                <button type="button" class="btn btn-primary" onclick="$('#change-status-form').submit();">Изменить</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<div class="modal fade" id="change-manager-dialog" tabindex="-1" role="dialog" aria-labelledby="changeManagerLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Изменение менеджера заказа</h4>
+            </div>
+            <div class="modal-body">
+                <form id="change-manager-form" method="POST" class="form-horizontal" role="form" action="/manage/orders/change-manager">
+                    <input type="hidden" id="change-manager-order-id-field" name="id" value="@Model.Id"/>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label" for="change-order-status-field">Новый статус</label>
+                        <div class="col-lg-9">
+                            <select name="managerId" class="form-control">
+                                @foreach (var user in usersRep.Search(u => u.RoleId == 4))
+                                {
+                                    <option value="@user.Id">@user.GetFioSmall()</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                <button type="button" class="btn btn-primary" onclick="$('#change-manager-form').submit();">Изменить</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        function recalc() {
+            var total = 0.0;
+            $(".price-holder").each(function (index, item) {
+                var tr = $(item).parent().parent();
+                var vendorPrice = parseFloat($(item).val().replace(",", "."));
+                var margin = parseFloat(tr.find(".margin-holder").val().replace(",", "."));
+                var quantity = parseInt(tr.find(".quant-holder").val());
+                var price = vendorPrice + margin;
+                var totalPrice = price * quantity;
+                total += totalPrice;
+                tr.find(".price").text(accounting.formatMoney(price, "р.", 2, " ", ",", "%v %s"));
+                tr.find(".total-price").text(accounting.formatMoney(totalPrice, "р.", 2, " ", ",", "%v %s"));
+            });
+            $("#total-price").text(accounting.formatMoney(total, "р.", 2, " ", ",", "%v %s"));
+        }
+
+        recalc();
+
+        $(".price-holder").change(function() {
+            recalc();
+            var id = $(this).parent().parent().data("id");
+            $.post("/manage/orders/change-vendor-price",{id: id, orderId: @Model.Id, value: $(this).val()}, function(data) {
+                if (data.success) {
+                    showSuccess("Цена поставщика успешно изменена");
+                }
+            },'json');
+        });
+
+        $(".margin-holder").change(function() {
+            recalc();
+            var id = $(this).parent().parent().data("id");
+            $.post("/manage/orders/change-margin",{id: id, orderId: @Model.Id, value: $(this).val()}, function(data) {
+                if (data.success) {
+                    showSuccess("Цена маржа успешно изменена");
+                }
+            },'json');
+        });
+
+        $(".quant-holder").change(function() {
+            recalc();
+            var id = $(this).parent().parent().data("id");
+            $.post("/manage/orders/change-quantity",{id: id, orderId: @Model.Id, value: $(this).val()}, function(data) {
+                if (data.success) {
+                    showSuccess("Количество успешно изменено");
+                }
+            },'json');
+        });
+        
+        $(".change-status").click(function () {
+            $("#change-status-dialog").modal({
+                keyboard: true
+            });
+            return false;
+        });
+        $(".change-manager").click(function () {
+            $("#change-manager-dialog").modal({
+                keyboard: true
+            });
+            return false;
+        });
+    });
+</script>

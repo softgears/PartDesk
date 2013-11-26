@@ -132,6 +132,7 @@
     <Compile Include="Controllers\ClientsController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\ManageCompaniesController.cs" />
+    <Compile Include="Controllers\ManageOrdersController.cs" />
     <Compile Include="Controllers\ManageRolesController.cs" />
     <Compile Include="Controllers\ManageSettingsController.cs" />
     <Compile Include="Controllers\ManageUsersController.cs" />
@@ -145,6 +146,7 @@
     <Compile Include="Models\Dashboard\DashboardModel.cs" />
     <Compile Include="Models\Manage\GenericListModel.cs" />
     <Compile Include="Models\Manage\ManageUsersListModel.cs" />
+    <Compile Include="Models\Manage\ManageOrdersListModel.cs" />
     <Compile Include="Models\Orders\OrderConfirmationModel.cs" />
     <Compile Include="Models\Orders\OrdersListModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -1262,6 +1264,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Orders\Info.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\ManageOrders\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\ManageOrders\Info.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
