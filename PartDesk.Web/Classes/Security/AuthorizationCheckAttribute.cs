@@ -27,7 +27,7 @@ namespace PartDesk.Web.Classes.Security
         /// </summary>
         /// <param name="requiredPermission">Дополнительное разрешение, которым должен обладать пользователь чтобы пройти авторизацию</param>
         /// <param name="redirectUrl">Урл, куда редиректить неавторизованного пользователя</param>
-        public AuthorizationCheckAttribute(long requiredPermission = -1 ,string redirectUrl = "/")
+        public AuthorizationCheckAttribute(long requiredPermission = -1 ,string redirectUrl = "/account/login")
         {
             RequiredPermission = requiredPermission;
             RedirectUrl = redirectUrl;
