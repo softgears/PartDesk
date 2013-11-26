@@ -260,7 +260,7 @@
             </div>
             <div class="modal-body">
                 <form id="change-status-form" method="POST" class="form-horizontal" role="form" action="/manage/orders/change-status">
-                    <input type="hidden" id="change-status-order-id-field" name="id" value="=@Model.Id"/>
+                    <input type="hidden" id="change-status-order-id-field" name="id" value="@Model.Id"/>
                     <div class="form-group">
                         <label class="col-lg-3 control-label" for="change-order-status-field">Новый статус</label>
                         <div class="col-lg-9">
