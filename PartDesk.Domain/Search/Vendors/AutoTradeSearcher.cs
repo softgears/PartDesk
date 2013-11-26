@@ -13,6 +13,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -113,7 +114,10 @@ namespace PartDesk.Domain.Search.Vendors
             var response = Encoding.UTF8.GetString(client.UploadValues(url,new NameValueCollection(){{"data",requestData}}));
 
             // Десериализуем данные
-            return JsonConvert.DeserializeObject<T>(response);
+            return JsonConvert.DeserializeObject<T>(response, new JsonSerializerSettings()
+            {
+                Culture = CultureInfo.GetCultureInfo("ru-RU")
+            });
         }
     }
 }

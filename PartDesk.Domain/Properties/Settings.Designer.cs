@@ -32,5 +32,16 @@ namespace PartDesk.Domain.Properties {
                 return ((string)(this["PartDeskConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=.\\SQLExpress;Initial Catalog=PartDesk;User ID=super;Password=super123" +
+            "")]
+        public string PartDeskConnectionString1 {
+            get {
+                return ((string)(this["PartDeskConnectionString1"]));
+            }
+        }
     }
 }

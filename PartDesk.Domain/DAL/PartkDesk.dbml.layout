@@ -131,31 +131,31 @@
         <elementListCompartment Id="903b9b7e-3e00-420d-90b6-873fcebdc12a" absoluteBounds="16.14, 2.585, 1.9700000000000002, 3.1339111328125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(12.125 : 3.40625); (16.125 : 3.40625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(12.125 : 3.46875); (14.5416666666667 : 3.46875 : JumpStart); (14.7083333333333 : 3.46875 : JumpEnd); (16.125 : 3.46875)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/PartDeskDataContext/Order/Order_OrderItem" />
       <nodes>
         <classShapeMoniker Id="c59e8da3-74c9-4dd8-8080-cc11a106f29c" />
         <classShapeMoniker Id="539ffb02-bece-4fd8-a250-9b941a21d568" />
       </nodes>
     </associationConnector>
-    <classShape Id="318de7e9-e69f-41cc-8ee3-9cc09e575849" absoluteBounds="13.5, 3.625, 2, 1.9631982421875">
+    <classShape Id="b41c6ba6-d035-40da-a837-90d8a7aca847" absoluteBounds="13.625, 3.75, 2, 1.9631982421875">
       <DataClassMoniker Name="/PartDeskDataContext/OrderStatusChangement" />
       <nestedChildShapes>
-        <elementListCompartment Id="0242e0c9-e752-43a4-92dc-e7509c8a5f9c" absoluteBounds="13.515, 4.085, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="58fca7ad-cec3-4de5-b613-0cc8fa196ab4" absoluteBounds="13.64, 4.21, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(12.125 : 4.60659912109375); (13.5 : 4.60659912109375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(12.125 : 4.73159912109375); (13.625 : 4.73159912109375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/PartDeskDataContext/Order/Order_OrderStatusChangement" />
       <nodes>
         <classShapeMoniker Id="c59e8da3-74c9-4dd8-8080-cc11a106f29c" />
-        <classShapeMoniker Id="318de7e9-e69f-41cc-8ee3-9cc09e575849" />
+        <classShapeMoniker Id="b41c6ba6-d035-40da-a837-90d8a7aca847" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(8.5 : 5.9223046875); (11.7760391666667 : 5.9223046875 : JumpStart); (12.1067720833333 : 5.9223046875 : JumpEnd); (14.5 : 5.9223046875); (14.5 : 5.5881982421875)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(8.5 : 3.03125); (14.625 : 3.03125); (14.625 : 3.75)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/PartDeskDataContext/User/User_OrderStatusChangement" />
       <nodes>
         <classShapeMoniker Id="5bd79b40-97e7-400d-8d5f-a3ef315adfa9" />
-        <classShapeMoniker Id="318de7e9-e69f-41cc-8ee3-9cc09e575849" />
+        <classShapeMoniker Id="b41c6ba6-d035-40da-a837-90d8a7aca847" />
       </nodes>
     </associationConnector>
   </nestedChildShapes>

@@ -549,7 +549,7 @@ namespace PartDesk.Domain.Entities
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_OrderStatusChangement", Storage="_OrderStatusChangements", ThisKey="Id", OtherKey="OrderId")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_OrderStatusChangement", Storage="_OrderStatusChangements", ThisKey="Id", OtherKey="AuthorId")]
 		public EntitySet<OrderStatusChangement> OrderStatusChangements
 		{
 			get
@@ -4125,7 +4125,7 @@ namespace PartDesk.Domain.Entities
 			{
 				if ((this._OrderId != value))
 				{
-					if ((this._Order.HasLoadedOrAssignedValue || this._User.HasLoadedOrAssignedValue))
+					if (this._Order.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -4169,6 +4169,10 @@ namespace PartDesk.Domain.Entities
 			{
 				if ((this._AuthorId != value))
 				{
+					if (this._User.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
 					this.OnAuthorIdChanging(value);
 					this.SendPropertyChanging();
 					this._AuthorId = value;
@@ -4252,7 +4256,7 @@ namespace PartDesk.Domain.Entities
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_OrderStatusChangement", Storage="_User", ThisKey="OrderId", OtherKey="Id", IsForeignKey=true, DeleteOnNull=true, DeleteRule="CASCADE")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_OrderStatusChangement", Storage="_User", ThisKey="AuthorId", OtherKey="Id", IsForeignKey=true, DeleteOnNull=true, DeleteRule="CASCADE")]
 		public User User
 		{
 			get
@@ -4275,11 +4279,11 @@ namespace PartDesk.Domain.Entities
 					if ((value != null))
 					{
 						value.OrderStatusChangements.Add(this);
-						this._OrderId = value.Id;
+						this._AuthorId = value.Id;
 					}
 					else
 					{
-						this._OrderId = default(long);
+						this._AuthorId = default(long);
 					}
 					this.SendPropertyChanged("User");
 				}

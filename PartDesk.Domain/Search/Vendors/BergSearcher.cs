@@ -12,6 +12,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -80,7 +81,10 @@ namespace PartDesk.Domain.Search.Vendors
         {
             var response = new StreamReader(resp.GetResponseStream()).ReadToEnd();
 
-            var info = JsonConvert.DeserializeObject<BergGetStockResponse>(response);
+            var info = JsonConvert.DeserializeObject<BergGetStockResponse>(response, new JsonSerializerSettings()
+            {
+                Culture = CultureInfo.GetCultureInfo("ru-RU")
+            });
 
             if (info != null && info.Resources.Length > 0)
             {

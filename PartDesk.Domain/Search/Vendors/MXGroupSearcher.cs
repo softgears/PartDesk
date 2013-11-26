@@ -12,6 +12,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -57,7 +58,10 @@ namespace PartDesk.Domain.Search.Vendors
 
                 if (!response.Contains("error"))
                 {
-                    var info = JsonConvert.DeserializeObject<MXGroupSearchResponse>(response);
+                    var info = JsonConvert.DeserializeObject<MXGroupSearchResponse>(response,new JsonSerializerSettings()
+                    {
+                        Culture = CultureInfo.GetCultureInfo("ru-RU")
+                    });
 
                     if (info.Result.Length > 0)
                     {
@@ -71,7 +75,7 @@ namespace PartDesk.Domain.Search.Vendors
                                 Name = res.Name,
                                 Quantity = res.Count.Contains("Out") ? 0 : Convert.ToInt32(res.Count),
                                 Vendor = PartVendor.MXGroup,
-                                VendorPrice = res.DiscountPrice != null ? Convert.ToDecimal(res.DiscountPrice.Replace('.',',')) : new decimal?(),
+                                VendorPrice = res.DiscountPrice != null ? Convert.ToDecimal(res.DiscountPrice.Replace('.',','),new CultureInfo("ru-RU")) : new decimal?(),
                                 Warehouse = res.StoreName,
                                 WarehouseId = res.StoreId
                             });
