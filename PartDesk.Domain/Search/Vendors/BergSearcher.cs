@@ -102,6 +102,7 @@ namespace PartDesk.Domain.Search.Vendors
                             VendorId = resource.Id,
                             Brand = resource.Brand.Name,
                             Warehouse = offer.Warehouse.Name,
+                            DeliveryPeriod = offer.AveragePeriod,
                             WarehouseId = offer.Warehouse.Id.ToString()
                         });
                     }

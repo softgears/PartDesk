@@ -122,6 +122,8 @@
                             </th>
                             <th>Бренд
                             </th>
+                            <th>Срок поставки
+                            </th>
                             <th>Цена поставщика
                             </th>
                             <th>Маржа
@@ -139,7 +141,7 @@
                         @if (items.Count == 0)
                         {
                             <tr>
-                                <td colspan="11">Нет позиций в заказе</td>
+                                <td colspan="12">Нет позиций в заказе</td>
                             </tr>
                         }
                         else
@@ -163,6 +165,9 @@
                                     @item.Brand
                                 </td>
                                 <td style="width: 100px">
+                                    <input type="text" class="period-holder form-control" style="width: 90px" value="@(item.DeliveryPeriod)"/>
+                                </td>
+                                <td style="width: 100px">
                                     <input type="text" class="price-holder form-control" style="width: 90px" value="@((item.VendorPrice ?? item.Price).ToString("0.00"))"/>
                                 </td>
                                 <td style="width: 100px">
@@ -179,7 +184,7 @@
                             </tr>
                             }
                             <tr>
-                                <td colspan="11" class="center well">Общая сумма заказа <span id="total-price"></span>
+                                <td colspan="12" class="center well">Общая сумма заказа <span id="total-price"></span>
                                 </td>
                             </tr>
                         }
@@ -345,6 +350,16 @@
 
         recalc();
 
+        $(".period-holder").change(function() {
+            recalc();
+            var id = $(this).parent().parent().data("id");
+            $.post("/manage/orders/change-period",{id: id, orderId: @Model.Id, value: $(this).val()}, function(data) {
+                if (data.success) {
+                    showSuccess("Период поставки успешно изменен");
+                }
+            },'json');
+        });
+        
         $(".price-holder").change(function() {
             recalc();
             var id = $(this).parent().parent().data("id");
@@ -360,7 +375,7 @@
             var id = $(this).parent().parent().data("id");
             $.post("/manage/orders/change-margin",{id: id, orderId: @Model.Id, value: $(this).val()}, function(data) {
                 if (data.success) {
-                    showSuccess("Цена маржа успешно изменена");
+                    showSuccess("Маржа успешно изменена");
                 }
             },'json');
         });

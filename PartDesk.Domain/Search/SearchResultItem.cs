@@ -215,5 +215,10 @@ namespace PartDesk.Domain.Search
             }
             return margin;
         }
+
+        /// <summary>
+        /// Время поставки
+        /// </summary>
+        public string DeliveryPeriod { get; set; }
     }
 }

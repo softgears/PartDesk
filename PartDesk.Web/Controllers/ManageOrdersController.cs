@@ -186,6 +186,40 @@ namespace PartDesk.Web.Controllers
         }
 
         /// <summary>
+        /// Обрабатывает изменение периода доставки позиции
+        /// </summary>
+        /// <param name="id">Идентификатор позиции</param>
+        /// <param name="orderId">Идентификатор заказа</param>
+        /// <param name="value">Новое значение</param>
+        /// <returns></returns>
+        [AuthorizationCheck(Permission.ManageOrders)][Route("manage/orders/change-period")]
+        public ActionResult ChangeDeliveryPeriod(long id, long orderId, string value)
+        {
+            // Ищем заказ
+            var rep = Locator.GetService<IOrdersRepository>();
+            var order = rep.Load(orderId);
+            if (order == null)
+            {
+                return Json(new {success = false, msg = "Заказ не найден"});
+            }
+
+            // Ищем позицию
+            var item = order.OrderItems.FirstOrDefault(oi => oi.Id == id);
+            if (item == null)
+            {
+                return Json(new {success = false, msg = "Позиция не найдена"});
+            }
+
+            // Меняем и пересчитываем
+            item.DeliveryPeriod = value;
+            item.DateModified = DateTime.Now;
+            rep.SubmitChanges();
+
+            // Отдаем результат
+            return Json(new {success = true});
+        }
+
+        /// <summary>
         /// Обрабатывает удаление указанной позиции из заказа
         /// </summary>
         /// <param name="id">Идентификатор позиции</param>

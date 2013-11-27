@@ -98,6 +98,8 @@
                             </th>
                             <th>Бренд
                             </th>
+                            <th>Срок поставки
+                            </th>
                             <th>Цена
                             </th>
                             <th>Количество
@@ -111,7 +113,7 @@
                         @if (items.Count == 0)
                         {
                             <tr>
-                                <td colspan="7">Нет позиций в заказе</td>
+                                <td colspan="8">Нет позиций в заказе</td>
                             </tr>
                         }
                         else
@@ -129,6 +131,9 @@
                                     @item.Brand
                                 </td>
                                 <td>
+                                    @item.DeliveryPeriod
+                                </td>
+                                <td>
                                     @String.Format("{0:c}", item.Price)
                                 </td>
                                 <td style="width: 100px">
@@ -141,7 +146,7 @@
                             </tr>
                             }
                             <tr>
-                                <td colspan="7" class="center well">Общая сумма заказа <span id="total-price">@Model.GetTotalPrice()</span>
+                                <td colspan="8" class="center well">Общая сумма заказа <span id="total-price">@Model.GetTotalPrice()</span>
                                 </td>
                             </tr>
                         }

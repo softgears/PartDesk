@@ -102,6 +102,12 @@ namespace PartDesk.Domain.Search.Models
             /// </summary>
             [JsonProperty("warehouse")]
             public BergWarehouse Warehouse { get; set; }
+
+            /// <summary>
+            /// Средний срок поставки
+            /// </summary>
+            [JsonProperty("average_period")]
+            public string AveragePeriod { get; set; } 
         }
 
         /// <summary>
