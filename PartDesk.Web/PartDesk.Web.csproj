@@ -144,6 +144,7 @@
     <Compile Include="Models\Account\ChangePasswordModel.cs" />
     <Compile Include="Models\Account\LoginModel.cs" />
     <Compile Include="Models\Dashboard\DashboardModel.cs" />
+    <Compile Include="Models\Dashboard\DashboardStatisticsModel.cs" />
     <Compile Include="Models\Manage\GenericListModel.cs" />
     <Compile Include="Models\Manage\ManageUsersListModel.cs" />
     <Compile Include="Models\Manage\ManageOrdersListModel.cs" />

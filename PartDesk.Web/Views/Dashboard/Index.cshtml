@@ -1,8 +1,426 @@
-﻿@model PartDesk.Web.Models.Dashboard.DashboardModel
+﻿@using PartDesk.Web.Classes.Ext
+@model PartDesk.Web.Models.Dashboard.DashboardModel
 
 @{
     ViewBag.Title = "Сводка";
     Layout = "../Shared/AccountLayout.cshtml";
 }
 
+@if (Model.CompanyOrders.Count > 0 || Model.MyOrders.Count > 0)
+{
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="icon"><i class="icon20 i-cart-2"></i></div>
+                    <h4>Мои заказы</h4>
+                    <a href="#" class="minimize"></a>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-striped table-bordered table-hover" id="my-orders-table">
+                        <thead>
+                            <tr>
+                                <th>Номер
+                                </th>
+                                <th>Клиент
+                                </th>
+                                <th>Статус
+                                </th>
+                                <th>Менеджер
+                                </th>
+                                <th>Стоимость
+                                </th>
+                                <th>Дата обновления
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.MyOrders.Count > 0)
+                            {
+                                foreach (var order in Model.MyOrders)
+                                {
+                                <tr>
+                                    <td>
+                                        <a href="/orders/@order.Id/info">@order.Id</a>
+                                    </td>
+                                    <td>
+                                        @order.Client.ToString()
+                                    </td>
+                                    <td>
+                                        <a href="/orders/@order.Id/info">@order.GetStatus()</a>
+                                    </td>
+                                    <td>
+                                        @order.Manager.GetFioSmall()
+                                    </td>
+                                    <td>
+                                        @order.GetTotalPrice()
+                                    </td>
+                                    <td>
+                                        @order.LastUpdate.FormatDateTime()
+                                    </td>
+                                    <td>
+                                        <a href="/orders/@order.Id/info" class="btn btn-xs btn-info tip" title="Информация о заказе"><i class="icon12 i-info-2"></i></a>
+                                    </td>
+                                </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="7">Нет активных заказов</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="icon"><i class="icon20 i-cart-4"></i></div>
+                    <h4>Заказы компании</h4>
+                    <a href="#" class="minimize"></a>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-striped table-bordered table-hover" id="comp-orders-table">
+                        <thead>
+                            <tr>
+                                <th>Номер
+                                </th>
+                                <th>Автор
+                                </th>
+                                <th>Клиент
+                                </th>
+                                <th>Статус
+                                </th>
+                                <th>Менеджер
+                                </th>
+                                <th>Стоимость
+                                </th>
+                                <th>Дата обновления
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.CompanyOrders.Count > 0)
+                            {
+                                foreach (var order in Model.CompanyOrders)
+                                {
+                                <tr>
+                                    <td>
+                                        <a href="/orders/@order.Id/info">@order.Id</a>
+                                    </td>
+                                    <td>
+                                        @order.Author.GetFioSmall()
+                                    </td>
+                                    <td>
+                                        @order.Client.ToString()
+                                    </td>
+                                    <td>
+                                        <a href="/orders/@order.Id/info">@order.GetStatus()</a>
+                                    </td>
+                                    <td>
+                                        @order.Manager.GetFioSmall()
+                                    </td>
+                                    <td>
+                                        @order.GetTotalPrice()
+                                    </td>
+                                    <td>
+                                        @order.LastUpdate.FormatDateTime()
+                                    </td>
+                                    <td>
+                                        <a href="/orders/@order.Id/info" class="btn btn-xs btn-info tip" title="Информация о заказе"><i class="icon12 i-info-2"></i></a>
+                                    </td>
+                                </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="8">Нет активных заказов</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@if (ViewContext.CurrentUser().HasAdministrativePermission())
+{
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="icon"><i class="icon20 i-cart-2"></i></div>
+                    <h4>Назначенные заказы</h4>
+                    <a href="#" class="minimize"></a>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-striped table-bordered table-hover" id="assigned-orders-table">
+                        <thead>
+                            <tr>
+                                <th>Номер
+                                </th>
+                                <th>Автор
+                                </th>
+                                <th>Компания
+                                </th>
+                                <th>Клиент
+                                </th>
+                                <th>Статус
+                                </th>
+                                <th>Стоимость
+                                </th>
+                                <th>Дата обновления
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.AssignedOrders.Count > 0)
+                            {
+                                foreach (var order in Model.AssignedOrders)
+                                {
+                                <tr>
+                                    <td>
+                                        <a href="/manage/orders/@order.Id/info">@order.Id</a>
+                                    </td>
+                                    <td>
+                                        <a href="/manage/users/@order.AuthorId/info">@order.Author.GetFioSmall()</a>
+                                    </td>
+                                    <td>
+                                        <a href="/manage/companies/@order.CompanyId/info">@order.Author.Company.Name</a>
+                                    </td>
+                                    <td>
+                                        @order.Client.ToString()
+                                    </td>
+                                    <td>
+                                        <a href="/manage/orders/@order.Id/info">@order.GetStatus()</a>
+                                    </td>
+                                    <td>
+                                        @order.GetTotalPrice()
+                                    </td>
+                                    <td>
+                                        @order.LastUpdate.FormatDateTime()
+                                    </td>
+                                    <td>
+                                        <a href="/orders/@order.Id/info" class="btn btn-xs btn-info tip" title="Информация о заказе"><i class="icon12 i-info-2"></i></a>
+                                    </td>
+                                </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="8">Нет активных заказов</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="icon"><i class="icon20 i-cart-4"></i></div>
+                    <h4>Последние заказы</h4>
+                    <a href="#" class="minimize"></a>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-striped table-bordered table-hover" id="latest-orders-table">
+                        <thead>
+                            <tr>
+                                <th>Номер
+                                </th>
+                                <th>Автор
+                                </th>
+                                <td>Компания
+                                </td>
+                                <th>Клиент
+                                </th>
+                                <th>Статус
+                                </th>
+                                <th>Менеджер
+                                </th>
+                                <th>Стоимость
+                                </th>
+                                <th>Дата обновления
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.CompanyOrders.Count > 0)
+                            {
+                                foreach (var order in Model.CompanyOrders)
+                                {
+                                <tr>
+                                    <td>
+                                        <a href="/manage/orders/@order.Id/info">@order.Id</a>
+                                    </td>
+                                    <td>
+                                        <a href="/manage/users/@order.AuthorId/info">@order.Author.GetFioSmall()</a>
+                                    </td>
+                                    <td>
+                                        <a href="/manage/companies/@order.CompanyId/info">@order.Author.Company.Name</a>
+                                    </td>
+                                    <td>
+                                        @order.Client.ToString()
+                                    </td>
+                                    <td>
+                                        <a href="/manage/orders/@order.Id/info">@order.GetStatus()</a>
+                                    </td>
+                                    <td>
+                                        <a href="/manage/users/@order.ManagerId/info">@order.Manager.GetFioSmall()</a>
+                                    </td>
+                                    <td>
+                                        @order.GetTotalPrice()
+                                    </td>
+                                    <td>
+                                        @order.LastUpdate.FormatDateTime()
+                                    </td>
+                                    <td>
+                                        <a href="/orders/@order.Id/info" class="btn btn-xs btn-info tip" title="Информация о заказе"><i class="icon12 i-info-2"></i></a>
+                                    </td>
+                                </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="9">Нет активных заказов</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="icon"><i class="icon20 i-pie-2"></i></div>
+                    <h4>Статистика системы</h4>
+                    <a href="#" class="minimize"></a>
+                </div>
+                <div class="panel-body center">
+                    <div class="stats-buttons">
+                        <ul class="list-unstyled center">
+                            <li>
+                                <a href="#" class="clearfix">
+                                    <span class="icon green"><i class="icon24 i-user"></i></span>
+                                    <span class="number">@Model.Statistics.TotalUsers</span>
+                                    <span class="txt">пользователей</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="clearfix">
+                                    <span class="icon blue"><i class="icon24 i-users"></i></span>
+                                    <span class="number">@Model.Statistics.TotalCompanies</span>
+                                    <span class="txt">компаний</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="clearfix">
+                                    <span class="icon blue"><i class="icon24 i-basket"></i></span>
+                                    <span class="number">@Model.Statistics.TotalOrders</span>
+                                    <span class="txt">заказов всего</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="clearfix">
+                                    <span class="icon yellow"><i class="icon24 i-circle"></i></span>
+                                    <span class="number">@Model.Statistics.OrdersInWork</span>
+                                    <span class="txt">заказов в работе</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="clearfix">
+                                    <span class="icon green"><i class="icon24 i-compass"></i></span>
+                                    <span class="number">@Model.Statistics.CompletedOrders</span>
+                                    <span class="txt">заказов выполнено</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="clearfix">
+                                    <span class="icon red"><i class="icon24 i-cancel"></i></span>
+                                    <span class="number">@Model.Statistics.CanceledOrders</span>
+                                    <span class="txt">заказов отменено</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="clearfix">
+                                    <span class="icon green"><i class="icon24 i-coin"></i></span>
+                                    <span class="number">@String.Format("{0:c}", Model.Statistics.TotalOrdersPrice)</span>
+                                    <span class="txt">стоимость заказов</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="clearfix">
+                                    <span class="icon green"><i class="icon24 i-coin"></i></span>
+                                    <span class="number">@String.Format("{0:c}", Model.Statistics.CompletedOrdersMargin)</span>
+                                    <span class="txt">прибыль с заказов</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="icon"><i class="icon20 i-power"></i></div>
+                    <h4>Последняя активность</h4>
+                    <a href="#" class="minimize"></a>
+                </div>
+                <!-- End .panel-heading -->
+
+                <div class="panel-body noPadding">
+                    <ul class="recent-activity">
+                        <li class="item">
+                            <span class="icon gray"><i class="icon16 i-upload-2"></i></span>
+                            <div class="text">admin <a href="#">SuggeElson</a> upload <a href="#">2 files</a></div>
+                            <span class="ago">10 sec ago</span>
+                        </li>
+                        <li class="item">
+                            <span class="icon green"><i class="icon16 i-images"></i></span>
+                            <span class="text">user <a href="#">Dean Jonson</a> delete <a href="#">3 pictures</a></span>
+                            <span class="ago">5 min ago</span>
+                        </li>
+                        <li class="item">
+                            <span class="icon red"><i class="icon16 i-bubbles-4"></i></span>
+                            <span class="text">user <a href="#">Klaydia Simson</a> add <a href="#">2 comments</a></span>
+                            <span class="ago">26 min ago</span>
+                        </li>
+                        <li class="item">
+                            <span class="icon blue"><i class="icon16 i-blog-2"></i></span>
+                            <span class="text">admin <a href="#">SuggeElson</a> add <a href="#">1 post</a></span>
+                            <span class="ago">2 hours ago</span>
+                        </li>
+                        <li class="item">
+                            <span class="icon yellow"><i class="icon16 i-support"></i></span>
+                            <span class="text">user <a href="#">Jacky Konnel</a> make <a href="#">1 support request</a></span>
+                            <span class="ago">17 hours ago</span>
+                        </li>
+                        <li class="item last-child">
+                            <span class="icon orange"><i class="icon16 i-lock"></i></span>
+                            <span class="text">user <a href="#">Dean Jonson</a> has <a href="#">5 failed login attempts</a></span>
+                            <span class="ago">2 days ago</span>
+                        </li>
+                    </ul>
+                </div>
+                <!-- End .panel-body -->
+            </div>
+        </div>
+    </div>
+}
 
