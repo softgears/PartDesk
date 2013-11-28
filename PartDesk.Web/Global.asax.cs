@@ -46,6 +46,7 @@ namespace PartDesk.Web
                     if (user != null)
                     {
                         context.Session["CurrentUser"] = user.Id;
+                        user.DateModified = DateTime.Now;
                         repository.SubmitChanges();
                     }
                     else

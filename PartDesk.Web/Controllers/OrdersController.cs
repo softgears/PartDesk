@@ -236,7 +236,7 @@ namespace PartDesk.Web.Controllers
         /// Отображает список завершенных заказов
         /// </summary>
         /// <returns></returns>
-        [Route("orders/active")]
+        [Route("orders/archive")]
         [AuthorizationCheck(Permission.MakeOrder)]
         public ActionResult Completed()
         {
@@ -244,7 +244,7 @@ namespace PartDesk.Web.Controllers
             var ordersRep = Locator.GetService<IOrdersRepository>();
 
             // Сортируем
-            var orders = ordersRep.Search(o => o.CompanyId == CurrentUser.CompanyId && o.Status >= 4).ToList();
+            var orders = ordersRep.Search(o => o.CompanyId == CurrentUser.CompanyId && o.Status > 4).ToList();
 
             PushNavigationItem("Заказы", "/orders/active");
             PushNavigationItem("Завершенные заказы", "#");

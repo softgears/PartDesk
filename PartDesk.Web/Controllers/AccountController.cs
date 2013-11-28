@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PartDesk.Domain.Entities;
 using PartDesk.Domain.Interfaces.Notifications;
 using PartDesk.Domain.Interfaces.Repositories;
 using PartDesk.Domain.IoC;
 using PartDesk.Domain.Routing;
 using PartDesk.Domain.Utils;
+using PartDesk.Web.Classes.Security;
 using PartDesk.Web.Models.Account;
 
 namespace PartDesk.Web.Controllers
@@ -91,6 +93,8 @@ namespace PartDesk.Web.Controllers
 
             // Авторизуем
             AuthorizeUser(user, model.RememberMe);
+            user.DateModified = DateTime.Now;
+            rep.SubmitChanges();
 
             // Идем в личный кабинет
             return RedirectToAction("Index","Dashboard");
@@ -108,6 +112,42 @@ namespace PartDesk.Web.Controllers
             }
 
             return RedirectToAction("Login");
+        }
+
+        #endregion
+
+        #region Profile
+
+        /// <summary>
+        /// Отображает форму редактирования профайла текущего пользователя
+        /// </summary>
+        /// <returns></returns>
+        [AuthorizationCheck()]
+        public new ActionResult Profile()
+        {
+            PushNavigationItem("Профиль","/account/profile");
+
+            return View();
+        }
+
+        /// <summary>
+        /// Обновляет личные данные профиля
+        /// </summary>
+        /// <param name="model">Модель данных</param>
+        /// <returns></returns>
+        [AuthorizationCheck][HttpPost][Route("account/profile/update")]
+        public ActionResult UpdateProfile(User model)
+        {
+            CurrentUser.FirstName = model.FirstName;
+            CurrentUser.LastName = model.LastName;
+            CurrentUser.SurName = model.SurName;
+            CurrentUser.Phone = model.Phone;
+            CurrentUser.DateModified = model.DateModified;
+            Locator.GetService<IUsersRepository>().SubmitChanges();
+
+            ShowSuccess("Профиль был успешно сохранен");
+
+            return RedirectToAction("Profile");
         }
 
         #endregion
