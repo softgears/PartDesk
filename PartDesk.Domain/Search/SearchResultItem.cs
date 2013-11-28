@@ -220,5 +220,29 @@ namespace PartDesk.Domain.Search
         /// Время поставки
         /// </summary>
         public string DeliveryPeriod { get; set; }
+
+        /// <summary>
+        /// Возвращает период доставки и другую информацию для выделения ряда 
+        /// </summary>
+        /// <returns></returns>
+        public WarehouseDeliveryPeriod GetWarehouseInfo()
+        {
+            // Репозиторий
+            var rep = Locator.GetService<IWarehouseDeliveryPeriodsRepository>();
+
+            // Ищем
+            var obj = rep.Find(i => i.Vendor == (short)Vendor && i.WarehouseName.ToLower() == Warehouse.ToLower());
+            if (obj == null)
+            {
+                return new WarehouseDeliveryPeriod()
+                {
+                    RowColor = "",
+                    DeliveryDate = this.DeliveryPeriod,
+                    WarehouseName = this.Warehouse
+                };
+            }
+
+            return obj;
+        }
     }
 }

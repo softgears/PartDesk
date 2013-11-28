@@ -41,6 +41,7 @@ namespace PartDesk.Domain.DAL
             builder.RegisterType<MailNotificationMessagesRepository>().As<IMailNotificationMessagesRepository>();
             builder.RegisterType<SMSNotificationMessagesRepository>().As<ISMSNotificationMessagesRepository>();
             builder.RegisterType<SettignsRepository>().As<ISettingsRepository>().InstancePerHttpRequest();
+            builder.RegisterType<WarehouseDeliveryPeriodsRepository>().As<IWarehouseDeliveryPeriodsRepository>();
         }
     }
 }

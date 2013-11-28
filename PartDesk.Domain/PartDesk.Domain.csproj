@@ -71,6 +71,7 @@
     <Compile Include="DAL\Repositories\SettignsRepository.cs" />
     <Compile Include="DAL\Repositories\SMSNotificationMessagesRepository.cs" />
     <Compile Include="DAL\Repositories\UsersRepository.cs" />
+    <Compile Include="DAL\Repositories\WarehouseDeliveryPeriodsRepository.cs" />
     <Compile Include="Entities\Client.cs" />
     <Compile Include="Entities\Company.cs" />
     <Compile Include="Entities\Order.cs" />
@@ -96,6 +97,7 @@
     <Compile Include="Interfaces\Repositories\ISettingsRepository.cs" />
     <Compile Include="Interfaces\Repositories\ISMSNotificationMessagesRepository.cs" />
     <Compile Include="Interfaces\Repositories\IUsersRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IWarehouseDeliveryPeriodsRepository.cs" />
     <Compile Include="Interfaces\Search\IPartDeskSearch.cs" />
     <Compile Include="Interfaces\Search\IVendorSearcher.cs" />
     <Compile Include="IoC\Locator.cs" />

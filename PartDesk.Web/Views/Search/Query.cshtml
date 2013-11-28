@@ -41,7 +41,8 @@
         {
             foreach (var result in Model.OrderByDescending(d => d.IsOriginal).ThenBy(d => d.VendorPrice))
             {
-                <tr data-article="@result.Article" data-id="@result.Id" data-name="@result.Name" data-quantity="@result.Quantity" data-vendor-price="@result.VendorPrice" data-warehouse="@result.Warehouse" data-warehouse-id="@result.WarehouseId" data-brand="@result.Brand" data-margin="@result.CalculateMargin()" data-price="@result.GetPrice(ViewContext.CurrentUser().Company)" data-period="@result.DeliveryPeriod" class="@(result.IsOriginal ? "success":"")">
+                var warehouseInfo = result.GetWarehouseInfo();
+                <tr data-article="@result.Article" data-id="@result.Id" data-name="@result.Name" data-quantity="@result.Quantity" data-vendor-price="@result.VendorPrice" data-warehouse="@result.Warehouse" data-warehouse-id="@result.WarehouseId" data-brand="@result.Brand" data-margin="@result.CalculateMargin()" data-price="@result.GetPrice(ViewContext.CurrentUser().Company)" data-period="@result.DeliveryPeriod" data-row-color="@warehouseInfo.RowColor" class="res-item">
                     <td>
                         @result.Article
                     </td>
@@ -52,7 +53,7 @@
                         @result.Brand
                     </td>
                     <td>
-                        @result.DeliveryPeriod
+                        @warehouseInfo.DeliveryDate
                     </td>
                     <td>
                         @result.Quantity
@@ -101,5 +102,11 @@
             keyboard: true
         });
         return false;
+    });
+    $(".res-item").each(function (index, item) {
+        var color = $(item).data("row-color");
+        if (color != null && color != "") {
+            $(item).css("background-color", color);
+        }
     });
 </script>

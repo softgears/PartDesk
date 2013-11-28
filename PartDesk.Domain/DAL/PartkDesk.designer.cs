@@ -64,6 +64,9 @@ namespace PartDesk.Domain.DAL
     partial void InsertOrderItem(PartDesk.Domain.Entities.OrderItem instance);
     partial void UpdateOrderItem(PartDesk.Domain.Entities.OrderItem instance);
     partial void DeleteOrderItem(PartDesk.Domain.Entities.OrderItem instance);
+    partial void InsertWarehouseDeliveryPeriod(PartDesk.Domain.Entities.WarehouseDeliveryPeriod instance);
+    partial void UpdateWarehouseDeliveryPeriod(PartDesk.Domain.Entities.WarehouseDeliveryPeriod instance);
+    partial void DeleteWarehouseDeliveryPeriod(PartDesk.Domain.Entities.WarehouseDeliveryPeriod instance);
     #endregion
 		
 		public PartDeskDataContext(string connection) : 
@@ -183,6 +186,14 @@ namespace PartDesk.Domain.DAL
 			get
 			{
 				return this.GetTable<PartDesk.Domain.Entities.OrderItem>();
+			}
+		}
+		
+		public System.Data.Linq.Table<PartDesk.Domain.Entities.WarehouseDeliveryPeriod> WarehouseDeliveryPeriods
+		{
+			get
+			{
+				return this.GetTable<PartDesk.Domain.Entities.WarehouseDeliveryPeriod>();
 			}
 		}
 	}
@@ -4310,6 +4321,212 @@ namespace PartDesk.Domain.Entities
 						this._OrderId = default(long);
 					}
 					this.SendPropertyChanged("Order");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.WarehouseDeliveryPeriods")]
+	public partial class WarehouseDeliveryPeriod : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _Id;
+		
+		private short _Vendor;
+		
+		private string _WarehouseName;
+		
+		private string _DeliveryDate;
+		
+		private string _RowColor;
+		
+		private System.Nullable<System.DateTime> _DateCreated;
+		
+		private System.Nullable<System.DateTime> _DateModified;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(long value);
+    partial void OnIdChanged();
+    partial void OnVendorChanging(short value);
+    partial void OnVendorChanged();
+    partial void OnWarehouseNameChanging(string value);
+    partial void OnWarehouseNameChanged();
+    partial void OnDeliveryDateChanging(string value);
+    partial void OnDeliveryDateChanged();
+    partial void OnRowColorChanging(string value);
+    partial void OnRowColorChanged();
+    partial void OnDateCreatedChanging(System.Nullable<System.DateTime> value);
+    partial void OnDateCreatedChanged();
+    partial void OnDateModifiedChanging(System.Nullable<System.DateTime> value);
+    partial void OnDateModifiedChanged();
+    #endregion
+		
+		public WarehouseDeliveryPeriod()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public long Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Vendor", DbType="SmallInt NOT NULL")]
+		public short Vendor
+		{
+			get
+			{
+				return this._Vendor;
+			}
+			set
+			{
+				if ((this._Vendor != value))
+				{
+					this.OnVendorChanging(value);
+					this.SendPropertyChanging();
+					this._Vendor = value;
+					this.SendPropertyChanged("Vendor");
+					this.OnVendorChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WarehouseName", DbType="NVarChar(255)")]
+		public string WarehouseName
+		{
+			get
+			{
+				return this._WarehouseName;
+			}
+			set
+			{
+				if ((this._WarehouseName != value))
+				{
+					this.OnWarehouseNameChanging(value);
+					this.SendPropertyChanging();
+					this._WarehouseName = value;
+					this.SendPropertyChanged("WarehouseName");
+					this.OnWarehouseNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DeliveryDate", DbType="NVarChar(MAX)")]
+		public string DeliveryDate
+		{
+			get
+			{
+				return this._DeliveryDate;
+			}
+			set
+			{
+				if ((this._DeliveryDate != value))
+				{
+					this.OnDeliveryDateChanging(value);
+					this.SendPropertyChanging();
+					this._DeliveryDate = value;
+					this.SendPropertyChanged("DeliveryDate");
+					this.OnDeliveryDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RowColor", DbType="NVarChar(50)")]
+		public string RowColor
+		{
+			get
+			{
+				return this._RowColor;
+			}
+			set
+			{
+				if ((this._RowColor != value))
+				{
+					this.OnRowColorChanging(value);
+					this.SendPropertyChanging();
+					this._RowColor = value;
+					this.SendPropertyChanged("RowColor");
+					this.OnRowColorChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreated", DbType="DateTime")]
+		public System.Nullable<System.DateTime> DateCreated
+		{
+			get
+			{
+				return this._DateCreated;
+			}
+			set
+			{
+				if ((this._DateCreated != value))
+				{
+					this.OnDateCreatedChanging(value);
+					this.SendPropertyChanging();
+					this._DateCreated = value;
+					this.SendPropertyChanged("DateCreated");
+					this.OnDateCreatedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateModified", DbType="DateTime")]
+		public System.Nullable<System.DateTime> DateModified
+		{
+			get
+			{
+				return this._DateModified;
+			}
+			set
+			{
+				if ((this._DateModified != value))
+				{
+					this.OnDateModifiedChanging(value);
+					this.SendPropertyChanging();
+					this._DateModified = value;
+					this.SendPropertyChanged("DateModified");
+					this.OnDateModifiedChanged();
 				}
 			}
 		}

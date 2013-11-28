@@ -1,9 +1,11 @@
-﻿@using PartDesk.Domain.Enums
+﻿@using PartDesk.Domain.Entities
+@using PartDesk.Domain.Enums
 @model System.Collections.Generic.List<PartDesk.Domain.Entities.Setting>
 
 @{
     ViewBag.Title = "Настройки системы";
     Layout = "../Shared/AccountLayout.cshtml";
+    IList<WarehouseDeliveryPeriod> periods = ViewBag.periods;
 }
 
 <div class="row">
@@ -38,7 +40,7 @@
                                         case SettingDataType.Digits:
                                             <input class="form-control required digits" name="@setting.Key" type="text" id="@setting.Key-field" value="@setting.Value"/>
                                             break;
-                                    case SettingDataType.Boolean:
+                                        case SettingDataType.Boolean:
                                             <input type="checkbox" name="@setting.Key" id="@setting.Key-field" @(setting.Value == "true" ? "checked=checked":"")/>
                                             break;
                                         default:
@@ -56,6 +58,83 @@
                         </div>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+</div>
+<a href="periods"></a>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="icon"><i class="icon20 i-car"></i></div>
+                <h4>Информация о доставке со складов</h4>
+                <a href="#" class="minimize"></a>
+            </div>
+            <!-- End .panel-heading -->
+            <div class="panel-body">
+                <p>
+                    <a href="/manage/settings/periods/add" class="btn btn-info tip" title="Добавить информация о доставке со склада">Добавить информацию</a>    
+                </p>
+                <table class="table table-bordered table-hover" id="warehouse-table">
+                    <thead>
+                        <tr>
+                            <th>
+                                ИД
+                            </th>
+                            <th>
+                                Поставщик
+                            </th>
+                            <th>
+                                Название склада
+                            </th>
+                            <th>
+                                Срок доставки
+                            </th>
+                            <th>
+                                Цвет
+                            </th>
+                            <th>
+                                
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (periods.Count > 0)
+                        {
+                            foreach (var period in periods)
+                            {
+                                <tr>
+                                    <td>
+                                        @period.Id
+                                    </td>
+                                    <td>
+                                        @(((PartVendor)period.Vendor).GetEnumMemberName())
+                                    </td>
+                                    <td>
+                                        @period.WarehouseName
+                                    </td>
+                                    <td>
+                                        @period.DeliveryDate
+                                    </td>
+                                    <td>
+                                        @period.RowColor
+                                    </td>
+                                    <td style="width: 90px">
+                                        <a href="/manage/settings/periods/@period.Id/edit" class="btn btn-xs btn-warning tip" title="Редактировать"><i class="icon12 i-enter-2"></i></a>
+                                        <a href="/manage/settings/periods/@period.Id/delete" class="btn btn-xs btn-danger tip" title="Редактировать"><i class="icon12 i-remove-2"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="6">Не создано информации о доставке со складов</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
